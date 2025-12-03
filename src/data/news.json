@@ -1,0 +1,112 @@
+[
+  {
+    "id": "news_001",
+    "title": "EU Carbon Price Hits Record High Amid Tightening Emissions Cap",
+    "summary": "The European Union's carbon allowance prices surged to €105 per tonne, marking a historic milestone. Analysts attribute the spike to stricter emission reduction targets and increased industrial demand.",
+    "body": "European carbon prices reached an unprecedented €105 per metric tonne this week, driven by the EU's accelerated climate ambitions under the Fit for 55 package. The price surge reflects reduced allowance supply as the bloc phases down free allocations to heavy industries. Energy-intensive sectors are scrambling to secure credits ahead of the 2030 deadline for 55% emission cuts. Market observers predict sustained high prices as companies transition to cleaner technologies, though concerns about carbon leakage and competitiveness remain. Environmental groups hailed the development as a strong market signal favoring decarbonization investments.",
+    "author": "Elena Martinez",
+    "date": "2025-11-28T09:15:00Z",
+    "source": "Bloomberg Green",
+    "sentiment": "Positive",
+    "image_url": "https://via.placeholder.com/800x450/4CAF50/FFFFFF?text=EU+Carbon+Market"
+  },
+  {
+    "id": "news_002",
+    "title": "Breakthrough in Direct Air Capture Technology Could Slash Carbon Removal Costs",
+    "summary": "A Silicon Valley startup unveiled a new DAC system using novel sorbent materials that reduces energy consumption by 40%. The innovation could make carbon removal economically viable at scale.",
+    "body": "ClimateCapture Inc. announced a revolutionary direct air capture system that slashes operational costs from $600 to $250 per tonne of CO2 removed. The breakthrough involves engineered metal-organic frameworks that require significantly less heat for regeneration, cutting energy needs by 40%. The company plans to deploy its first commercial-scale facility in West Texas by 2027, targeting 1 million tonnes of annual removal capacity. Industry experts suggest this could accelerate corporate net-zero strategies, though scalability challenges remain. The technology has already secured $120 million in Series B funding from climate-focused venture capital firms.",
+    "author": "David Chen",
+    "date": "2025-11-25T14:30:00Z",
+    "source": "TechCrunch Climate",
+    "sentiment": "Positive",
+    "image_url": "https://via.placeholder.com/800x450/2196F3/FFFFFF?text=Carbon+Capture+Tech"
+  },
+  {
+    "id": "news_003",
+    "title": "Major Oil Companies Face Lawsuits Over Carbon Offset Greenwashing Claims",
+    "summary": "Environmental groups filed coordinated legal actions against three petroleum giants, alleging misleading carbon neutrality claims. The cases could reshape corporate climate disclosure standards.",
+    "body": "A coalition of NGOs launched litigation against ExxonMobil, Shell, and TotalEnergies, arguing their carbon offset portfolios contain low-quality credits that don't deliver promised emission reductions. The lawsuits cite investigations revealing that up to 60% of REDD+ forest credits purchased by these companies came from projects with questionable additionality and permanence. Prosecutors are seeking damages and mandatory third-party verification of all future offset purchases. The cases arrive as regulators worldwide tighten rules on net-zero claims, with the EU's Green Claims Directive setting new precedents. Industry defenders argue the suits could discourage voluntary climate action.",
+    "author": "Sarah Okonkwo",
+    "date": "2025-11-22T11:00:00Z",
+    "source": "The Guardian Environment",
+    "sentiment": "Negative",
+    "image_url": "https://via.placeholder.com/800x450/FF5722/FFFFFF?text=Greenwashing+Lawsuit"
+  },
+  {
+    "id": "news_004",
+    "title": "India Launches National Carbon Trading Scheme Covering 400 Million Tonnes",
+    "summary": "India's carbon market officially opened today, becoming the world's fourth-largest emissions trading system. The scheme covers power generation, cement, and steel sectors initially.",
+    "body": "India inaugurated its Carbon Credit Trading Scheme (CCTS) with an initial cap of 400 million tonnes of CO2 equivalent, targeting gradual expansion to 1 billion tonnes by 2030. The market-based mechanism applies to 135 of the country's highest-emitting facilities, with penalties for non-compliance reaching ₹50,000 per excess tonne. Early trading saw carbon allowances priced at ₹850 ($10.20), lower than anticipated by analysts. The government allocated free permits covering 95% of baseline emissions in the first phase to ease industry transition. Environmental economists view the launch as crucial for India meeting its 2070 net-zero commitment, though critics worry lenient caps may limit effectiveness.",
+    "author": "Priya Sharma",
+    "date": "2025-11-20T05:45:00Z",
+    "source": "Reuters Sustainability",
+    "sentiment": "Neutral",
+    "image_url": "https://via.placeholder.com/800x450/FF9800/FFFFFF?text=India+Carbon+Market"
+  },
+  {
+    "id": "news_005",
+    "title": "Ocean-Based Carbon Removal Startups Secure $2.3B in Funding Surge",
+    "summary": "Venture capital is flooding into marine carbon dioxide removal technologies, from kelp farming to ocean alkalinity enhancement. The sector attracted record investment this quarter.",
+    "body": "Blue carbon solutions captured unprecedented investor attention in Q3 2025, with companies like Running Tide, Ebb Carbon, and Captura raising a combined $2.3 billion. Ocean-based CDR methods promise cheaper scalability than terrestrial approaches, with some techniques sequestering carbon for millennia in deep ocean sediments. Kelp cultivation projects in the North Sea and electrochemical ocean alkalinity enhancement systems off California are moving from pilot to commercial phases. However, marine scientists caution that ecological impacts remain poorly understood, and monitoring, reporting, and verification standards lag behind terrestrial methodologies. Regulatory frameworks for ocean CDR are still emerging in international waters.",
+    "author": "Marcus Johnson",
+    "date": "2025-11-18T16:20:00Z",
+    "source": "GreenTech Daily",
+    "sentiment": "Positive",
+    "image_url": "https://via.placeholder.com/800x450/00BCD4/FFFFFF?text=Ocean+Carbon+Removal"
+  },
+  {
+    "id": "news_006",
+    "title": "Voluntary Carbon Market Prices Plunge 35% Amid Quality Concerns",
+    "summary": "The voluntary carbon market experienced its sharpest quarterly decline as buyers increasingly reject credits lacking robust verification. High-integrity projects see price premiums widen.",
+    "body": "Average voluntary carbon credit prices fell to $8.40 per tonne in Q4 2025, down from $12.90 the previous quarter, according to Ecosystem Marketplace data. The collapse primarily affected nature-based credits from legacy cookstove and forestry projects under scrutiny for overstated impact claims. Meanwhile, prices for high-quality engineered removal credits remained stable around $200-300 per tonne, creating a bifurcated market. Corporate buyers are demanding compliance with the Core Carbon Principles framework and prioritizing credits with clear co-benefits. Market analysts predict continued volatility until universal quality standards are adopted, with many predicting consolidation among project developers.",
+    "author": "Jennifer Wu",
+    "date": "2025-11-15T13:10:00Z",
+    "source": "Carbon Pulse",
+    "sentiment": "Negative",
+    "image_url": "https://via.placeholder.com/800x450/9C27B0/FFFFFF?text=Carbon+Market+Decline"
+  },
+  {
+    "id": "news_007",
+    "title": "Global Solar Capacity Surpasses Coal for First Time in History",
+    "summary": "Renewable energy reached a pivotal milestone as worldwide solar installations exceeded coal power generation capacity. The transition accelerates amid falling panel costs and climate policies.",
+    "body": "The International Energy Agency confirmed that global solar photovoltaic capacity reached 1,627 GW in October 2025, overtaking coal's 1,615 GW for the first time since the industrial revolution. China accounted for 42% of new solar additions, while emerging markets in Africa and Southeast Asia showed exponential growth. Solar panel prices dropped below $0.15 per watt, making utility-scale projects cheaper than fossil fuel alternatives in 140 countries. Energy analysts project solar will comprise 35% of global electricity generation by 2035, up from 12% today. The milestone marks a decisive shift in the energy transition, though grid infrastructure challenges persist in many regions.",
+    "author": "Thomas Lindström",
+    "date": "2025-11-12T08:00:00Z",
+    "source": "Bloomberg Green",
+    "sentiment": "Positive",
+    "image_url": "https://via.placeholder.com/800x450/FFC107/FFFFFF?text=Solar+Surpasses+Coal"
+  },
+  {
+    "id": "news_008",
+    "title": "Amazon Rainforest Deforestation Drops 41% Following Policy Reforms",
+    "summary": "Brazil reported dramatic reductions in Amazon forest clearing after implementing stricter enforcement and indigenous land protections. Conservation groups remain cautiously optimistic.",
+    "body": "Brazilian satellite monitoring systems recorded a 41% year-over-year decline in Amazon deforestation for 2025, the lowest rate in 15 years. The improvement follows President da Silva's reinstatement of environmental agencies' enforcement powers and expansion of indigenous territories by 8.3 million hectares. Illegal logging operations faced 3,200 raids, with seizures totaling $890 million in equipment and timber. The reduced deforestation could prevent an estimated 190 million tonnes of CO2 emissions annually, equivalent to taking 40 million cars off roads. However, scientists warn that climate-driven droughts and agricultural lobby pressures still threaten long-term rainforest stability.",
+    "author": "Camila Rodrigues",
+    "date": "2025-11-08T10:30:00Z",
+    "source": "The Guardian Environment",
+    "sentiment": "Positive",
+    "image_url": "https://via.placeholder.com/800x450/4CAF50/FFFFFF?text=Amazon+Conservation"
+  },
+  {
+    "id": "news_009",
+    "title": "Electric Vehicle Sales Growth Slows as Market Saturation Concerns Emerge",
+    "summary": "Global EV adoption rates decelerated to 18% growth in Q3, down from 45% last year. Analysts cite infrastructure gaps and affordability challenges in key markets.",
+    "body": "Electric vehicle sales growth moderated significantly in the third quarter of 2025, with only 3.2 million units sold globally compared to 4.1 million in Q2. The slowdown affected primarily mid-tier markets in Europe and North America, where charging infrastructure expansion hasn't kept pace with demand. Rising lithium prices increased battery costs by 12%, pushing entry-level EV prices beyond combustion vehicle parity. China maintained robust demand with 60% of global EV sales, while Western markets saw inventory buildup. Industry leaders are calling for renewed government incentives and accelerated charging network deployment. Forecasters now predict EVs will reach 50% market share by 2033, three years later than previous estimates.",
+    "author": "Alex Petrov",
+    "date": "2025-11-05T15:45:00Z",
+    "source": "Automotive News Green",
+    "sentiment": "Neutral",
+    "image_url": "https://via.placeholder.com/800x450/607D8B/FFFFFF?text=EV+Market+Slowdown"
+  },
+  {
+    "id": "news_010",
+    "title": "COP30 Climate Summit Ends With Controversial Methane Emissions Deal",
+    "summary": "Nearly 190 countries agreed to reduce methane emissions 50% by 2035, but enforcement mechanisms remain voluntary. Activists criticize the lack of binding commitments.",
+    "body": "The 30th Conference of the Parties concluded in Buenos Aires with a landmark methane reduction pledge covering agriculture, fossil fuel operations, and waste management. Major emitters including the United States, China, and Brazil committed to satellite-based monitoring systems and quarterly reporting. However, the agreement lacks penalties for non-compliance, relying instead on peer pressure and market incentives. Environmental organizations condemned the voluntary framework as insufficient, noting methane's 80-times greater warming potential than CO2 over 20 years. The agriculture industry secured exemptions for smallholder farmers in developing nations. Implementation funding of $85 billion was pledged by developed countries, though disbursement timelines remain undefined.",
+    "author": "Fatima Al-Rashid",
+    "date": "2025-11-02T12:00:00Z",
+    "source": "Climate Home News",
+    "sentiment": "Neutral",
+    "image_url": "https://via.placeholder.com/800x450/795548/FFFFFF?text=COP30+Summit"
+  }
+]

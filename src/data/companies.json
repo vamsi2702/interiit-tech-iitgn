@@ -1,0 +1,122 @@
+[
+  {
+    "id": "TSLA",
+    "name": "Tesla, Inc.",
+    "industry": "Automotive & Energy",
+    "description": "Leading electric vehicle manufacturer and clean energy company producing EVs, battery energy storage systems, and solar products. Tesla's mission centers on accelerating the world's transition to sustainable energy through innovation in transportation and renewable energy infrastructure.",
+    "gii_score": 89,
+    "stock_price": 242.84,
+    "market_cap": "2.4T",
+    "sustainability_update": "Announced plans to power all Gigafactories with 100% renewable energy by 2026 and published first comprehensive supply chain carbon footprint report showing 30% reduction in battery production emissions.",
+    "esg_rating": "A",
+    "website": "https://www.tesla.com"
+  },
+  {
+    "id": "MSFT",
+    "name": "Microsoft Corporation",
+    "industry": "Technology",
+    "description": "Global technology leader providing cloud computing, software, devices, and services. Microsoft has committed to being carbon negative by 2030 and removing all historical emissions by 2050, backed by aggressive renewable energy procurement and carbon removal investments.",
+    "gii_score": 92,
+    "stock_price": 378.91,
+    "market_cap": "2.8T",
+    "sustainability_update": "Achieved 100% renewable energy in all data centers globally and invested $200M in carbon removal technologies, purchasing 1.3M tonnes of CDR credits through the Frontier climate fund.",
+    "esg_rating": "AAA",
+    "website": "https://www.microsoft.com"
+  },
+  {
+    "id": "NVDA",
+    "name": "NVIDIA Corporation",
+    "industry": "Semiconductors",
+    "description": "Pioneer in GPU technology and AI computing platforms powering applications from gaming to autonomous vehicles and data centers. NVIDIA's chips enable AI-driven climate modeling, energy optimization, and renewable energy grid management systems worldwide.",
+    "gii_score": 85,
+    "stock_price": 482.57,
+    "market_cap": "1.9T",
+    "sustainability_update": "Launched Earth-2 climate digital twin initiative to provide AI-powered climate predictions at unprecedented resolution, while reducing data center energy consumption per computation by 45% through next-gen chip efficiency.",
+    "esg_rating": "A+",
+    "website": "https://www.nvidia.com"
+  },
+  {
+    "id": "ORCL",
+    "name": "Oracle Corporation",
+    "industry": "Technology",
+    "description": "Enterprise software and cloud infrastructure provider offering database systems, ERP, and cloud services to organizations globally. Oracle operates one of the world's most energy-efficient cloud infrastructures and has committed to 100% renewable energy by 2025.",
+    "gii_score": 81,
+    "stock_price": 175.32,
+    "market_cap": "487B",
+    "sustainability_update": "Surpassed 90% renewable energy across global operations and deployed AI-powered cooling systems reducing data center energy use by 38%, saving 520 GWh annually.",
+    "esg_rating": "A",
+    "website": "https://www.oracle.com"
+  },
+  {
+    "id": "NESN.SW",
+    "name": "Nestlé S.A.",
+    "industry": "Consumer Goods",
+    "description": "World's largest food and beverage company with portfolio spanning nutrition, coffee, dairy, and pet care. Nestlé has committed to achieving net zero emissions across its value chain by 2050, focusing on regenerative agriculture and sustainable packaging.",
+    "gii_score": 78,
+    "stock_price": 87.45,
+    "market_cap": "242B",
+    "sustainability_update": "Transitioned 42% of agricultural raw material sourcing to regenerative farming practices and introduced fully recyclable paper-based packaging for 78% of product lines, eliminating 145,000 tonnes of plastic annually.",
+    "esg_rating": "A-",
+    "website": "https://www.nestle.com"
+  },
+  {
+    "id": "AAPL",
+    "name": "Apple Inc.",
+    "industry": "Technology",
+    "description": "Designer and manufacturer of consumer electronics, software, and online services including iPhone, Mac, iPad, and wearables. Apple achieved carbon neutrality in corporate operations and aims for carbon neutral products across the entire lifecycle by 2030.",
+    "gii_score": 94,
+    "stock_price": 189.95,
+    "market_cap": "2.9T",
+    "sustainability_update": "Launched first carbon-neutral product line with Apple Watch Series 9, utilizing 100% recycled aluminum and cobalt while offsetting remaining emissions through high-quality forestry and renewable energy credits.",
+    "esg_rating": "AAA",
+    "website": "https://www.apple.com"
+  },
+  {
+    "id": "SCATC.OL",
+    "name": "Scatec ASA",
+    "industry": "Renewable Energy",
+    "description": "Leading renewable energy solutions provider developing, building, and operating solar, wind, and hydropower plants across four continents. Scatec specializes in emerging markets, bringing clean electricity to underserved communities while driving decarbonization.",
+    "gii_score": 88,
+    "stock_price": 78.20,
+    "market_cap": "12.4B",
+    "sustainability_update": "Commissioned 1.2 GW of new solar capacity across Egypt, South Africa, and Philippines, powering 1.8 million homes with clean energy and avoiding 2.1M tonnes of CO2 emissions annually.",
+    "esg_rating": "AA",
+    "website": "https://www.scatec.com"
+  },
+  {
+    "id": "UL",
+    "name": "Unilever PLC",
+    "industry": "Consumer Goods",
+    "description": "Multinational consumer goods company producing food, beverages, cleaning agents, and personal care products under brands like Dove, Lifebuoy, and Ben & Jerry's. Unilever's Sustainable Living Plan targets halving environmental footprint while doubling business size.",
+    "gii_score": 83,
+    "stock_price": 58.74,
+    "market_cap": "145B",
+    "sustainability_update": "Achieved zero deforestation in palm oil supply chain with 98% physically certified sustainable palm oil and reduced plastic packaging by 115,000 tonnes through refill station rollouts across 15 countries.",
+    "esg_rating": "A+",
+    "website": "https://www.unilever.com"
+  },
+  {
+    "id": "ORSTED.CO",
+    "name": "Ørsted A/S",
+    "industry": "Renewable Energy",
+    "description": "World's leading offshore wind developer transforming from fossil fuels to renewable energy. Originally a coal-heavy utility, Ørsted divested all fossil fuel assets to focus exclusively on offshore wind, onshore wind, and solar energy generation.",
+    "gii_score": 96,
+    "stock_price": 412.50,
+    "market_cap": "178B",
+    "sustainability_update": "Brought online 2.4 GW of new offshore wind capacity in UK and US waters, supplying clean electricity to 3.2 million households and achieved Science-Based Targets initiative's most ambitious 1.5°C pathway certification.",
+    "esg_rating": "AAA",
+    "website": "https://www.orsted.com"
+  },
+  {
+    "id": "ASML",
+    "name": "ASML Holding N.V.",
+    "industry": "Semiconductor Equipment",
+    "description": "Leading supplier of photolithography systems for the semiconductor industry, enabling production of advanced chips that power energy-efficient computing, electric vehicles, and renewable energy systems. ASML's technology is critical for next-generation sustainable electronics.",
+    "gii_score": 86,
+    "stock_price": 735.82,
+    "market_cap": "294B",
+    "sustainability_update": "Deployed EUV lithography systems that reduce chip manufacturing energy consumption by 40% per wafer while committing to climate-neutral operations by 2025 through renewable energy PPAs covering 85% of electricity use.",
+    "esg_rating": "AA",
+    "website": "https://www.asml.com"
+  }
+]

@@ -16,8 +16,20 @@ CORS(app)  # Enable CORS for React frontend
 GOOGLE_API_KEY = "AIzaSyAHgffPdqk9PsE74s8SvEiylajl70elk6c"
 os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 
-# Initialize UI Functions
-ui_functions = EcoInvestUIFunctions(data_dir="../src/data")
+# Initialize UI Functions (shared for data access)
+ui_functions_base = EcoInvestUIFunctions(data_dir="../src/data")
+
+# Session-specific UI functions instances
+session_ui_functions = {}
+
+def get_session_ui_functions(session_id: str) -> EcoInvestUIFunctions:
+    """Get or create UI functions instance for a session"""
+    if session_id not in session_ui_functions:
+        session_ui_functions[session_id] = EcoInvestUIFunctions(data_dir="../src/data")
+    return session_ui_functions[session_id]
+
+# Current session ID (will be set per request)
+current_session_id = "default"
 
 # Initialize Gemini model with tool calling
 llm = ChatGoogleGenerativeAI(
@@ -30,6 +42,7 @@ llm = ChatGoogleGenerativeAI(
 
 def get_company_info_tool(company_id: str) -> str:
     """Get detailed information about a company by ticker symbol (e.g., TSLA, MSFT, AAPL)."""
+    ui_functions = get_session_ui_functions(current_session_id)
     company = ui_functions.get_company_by_id(company_id)
     if company:
         return json.dumps({
@@ -46,6 +59,7 @@ def get_company_info_tool(company_id: str) -> str:
 
 def search_companies_tool(query: str) -> str:
     """Search for companies by name, ticker symbol, or industry. Returns matching companies."""
+    ui_functions = get_session_ui_functions(current_session_id)
     results = ui_functions.search_companies(query)
     if results:
         companies_list = [
@@ -57,6 +71,7 @@ def search_companies_tool(query: str) -> str:
 
 def get_top_performers_tool(limit: str = "5") -> str:
     """Get the top performing companies by GII (Green Innovation Index) score."""
+    ui_functions = get_session_ui_functions(current_session_id)
     try:
         limit_int = int(limit)
     except:
@@ -71,11 +86,13 @@ def get_top_performers_tool(limit: str = "5") -> str:
 
 def add_to_watchlist_tool(company_id: str) -> str:
     """Add a company to the user's watchlist by ticker symbol."""
+    ui_functions = get_session_ui_functions(current_session_id)
     result = ui_functions.add_company_to_watchlist(company_id)
     return result['message']
 
 def get_watchlist_tool(input: str = "") -> str:
     """Get all companies in the user's watchlist."""
+    ui_functions = get_session_ui_functions(current_session_id)
     watchlist = ui_functions.get_watchlist_companies()
     if watchlist:
         companies_list = [
@@ -87,11 +104,13 @@ def get_watchlist_tool(input: str = "") -> str:
 
 def remove_from_watchlist_tool(company_id: str) -> str:
     """Remove a company from the user's watchlist by ticker symbol."""
+    ui_functions = get_session_ui_functions(current_session_id)
     result = ui_functions.remove_company_from_watchlist(company_id)
     return result['message']
 
 def get_latest_news_tool(limit: str = "5") -> str:
     """Get the latest sustainability and ESG news articles."""
+    ui_functions = get_session_ui_functions(current_session_id)
     try:
         limit_int = int(limit)
     except:
@@ -106,6 +125,7 @@ def get_latest_news_tool(limit: str = "5") -> str:
 
 def search_news_tool(query: str) -> str:
     """Search news articles about sustainability, ESG, or specific topics."""
+    ui_functions = get_session_ui_functions(current_session_id)
     results = ui_functions.search_news(query)
     if results:
         news_list = [
@@ -117,6 +137,7 @@ def search_news_tool(query: str) -> str:
 
 def get_all_projects_tool(input: str = "") -> str:
     """Get information about available carbon credit and sustainability projects."""
+    ui_functions = get_session_ui_functions(current_session_id)
     projects = ui_functions.get_all_projects()
     if projects:
         projects_list = [
@@ -128,6 +149,7 @@ def get_all_projects_tool(input: str = "") -> str:
 
 def get_industry_stats_tool(input: str = "") -> str:
     """Get statistics about different industries in the platform."""
+    ui_functions = get_session_ui_functions(current_session_id)
     stats = ui_functions.get_industry_statistics()
     industries_list = [
         f"- {industry}: {data['count']} companies, Avg GII: {data['avg_gii_score']}"
@@ -137,6 +159,7 @@ def get_industry_stats_tool(input: str = "") -> str:
 
 def filter_by_esg_tool(min_rating: str = "A") -> str:
     """Filter companies by minimum ESG rating (AAA, AA, A, BBB, BB, B, etc.)."""
+    ui_functions = get_session_ui_functions(current_session_id)
     results = ui_functions.filter_companies_by_esg(min_rating)
     if results:
         companies_list = [
@@ -148,6 +171,7 @@ def filter_by_esg_tool(min_rating: str = "A") -> str:
 
 def get_system_stats_tool(input: str = "") -> str:
     """Get overall platform statistics including total companies, news, projects, and averages."""
+    ui_functions = get_session_ui_functions(current_session_id)
     stats = ui_functions.get_system_stats()['stats']
     return json.dumps(stats, indent=2)
 
@@ -241,10 +265,14 @@ conversation_history = {}
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
+    global current_session_id
     try:
         data = request.json
         user_message = data.get('message', '')
         session_id = data.get('session_id', 'default')
+        
+        # Set the current session ID for tools to use
+        current_session_id = session_id
         
         if not user_message:
             return jsonify({'error': 'No message provided'}), 400

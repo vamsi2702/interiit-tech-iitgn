@@ -65,9 +65,9 @@ const ReportPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-emerald-400 mb-4">Not Found</h2>
+          <h2 className="text-2xl font-bold text-cyan-400 mb-4">Not Found</h2>
           <p className="text-slate-400 mb-6">The requested company or project could not be found.</p>
-          <Link to="/" className="text-emerald-400 hover:text-emerald-300 underline">
+          <Link to="/" className="text-cyan-400 hover:text-cyan-300 underline">
             Return to Dashboard
           </Link>
         </div>
@@ -87,15 +87,15 @@ const ReportPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         {/* Back Button */}
         <Link 
           to="/" 
-          className="inline-flex items-center space-x-2 text-emerald-400 hover:text-emerald-300 mb-6 transition"
+          className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 mb-6 transition"
         >
           <ArrowLeft className="w-5 h-5" />
           <span className="font-medium">Back to Dashboard</span>
@@ -105,13 +105,13 @@ const ReportPage = () => {
           <>
             {/* COMPANY VIEW */}
             {/* Header Section */}
-            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-8 mb-8 border border-emerald-500/30 animate-slideIn">
+            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-8 mb-8 border border-cyan-500/30 animate-slideIn">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="flex items-center space-x-3 mb-2">
-                    <Building2 className="w-10 h-10 text-emerald-400" />
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-green-300 to-emerald-400 bg-clip-text text-transparent">{company.name}</h1>
-                    <span className="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                    <Building2 className="w-10 h-10 text-cyan-400" />
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">{company.name}</h1>
+                    <span className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
                       {company.id}
                     </span>
                   </div>
@@ -128,7 +128,7 @@ const ReportPage = () => {
                     </div>
                     <div>
                       <p className="text-sm text-slate-500">ESG Rating</p>
-                      <p className="text-3xl font-bold text-emerald-400">{company.esg_rating}</p>
+                      <p className="text-3xl font-bold text-cyan-400">{company.esg_rating}</p>
                     </div>
                   </div>
                 </div>
@@ -136,8 +136,8 @@ const ReportPage = () => {
             </div>
 
             {/* Ask About Company - Moved to Top */}
-            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 mb-8 animate-slideIn" style={{animationDelay: '0.1s'}}>
-              <h2 className="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 mb-8 animate-slideIn" style={{animationDelay: '0.1s'}}>
+              <h2 className="text-xl font-bold text-cyan-400 mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 animate-pulse" />
                 Ask about {company.name}
               </h2>
@@ -147,11 +147,11 @@ const ReportPage = () => {
                   value={askInput}
                   onChange={(e) => setAskInput(e.target.value)}
                   placeholder={`Ask anything about ${company.name}...`}
-                  className="flex-1 px-6 py-3 bg-slate-800/50 border border-emerald-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-200 placeholder-slate-500"
+                  className="flex-1 px-6 py-3 bg-slate-800/50 border border-cyan-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-200 placeholder-slate-500"
                 />
                 <button 
                   type="submit"
-                  className="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-emerald-500/50 transition-all hover:scale-105 flex items-center gap-2"
+                  className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transition-all hover:scale-105 flex items-center gap-2"
                 >
                   <Send className="w-5 h-5" />
                   <span className="font-semibold">Ask</span>
@@ -163,8 +163,8 @@ const ReportPage = () => {
             {/* Main Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
               {/* Left Column - Company Description */}
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.2s'}}>
-                <h2 className="text-2xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.2s'}}>
+                <h2 className="text-2xl font-bold text-cyan-400 mb-4 flex items-center gap-2">
                   <Building2 className="w-6 h-6" />
                   Company Overview
                 </h2>
@@ -175,7 +175,7 @@ const ReportPage = () => {
                     href={company.website} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition"
+                    className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition"
                   >
                     <ExternalLink className="w-4 h-4" />
                     <span>Visit Website</span>
@@ -184,11 +184,11 @@ const ReportPage = () => {
               </div>
 
               {/* Right Column - Insights */}
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.3s'}}>
-                <h2 className="text-2xl font-bold text-emerald-400 mb-4">Sustainability Insights</h2>
+              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.3s'}}>
+                <h2 className="text-2xl font-bold text-cyan-400 mb-4">Sustainability Insights</h2>
                 <div className="space-y-4">
-                  <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
-                    <h3 className="font-semibold text-emerald-300 mb-2">Latest Update</h3>
+                  <div className="p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-xl">
+                    <h3 className="font-semibold text-cyan-300 mb-2">Latest Update</h3>
                     <p className="text-slate-300 text-sm">{company.sustainability_update}</p>
                   </div>
                   
@@ -205,8 +205,8 @@ const ReportPage = () => {
             {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
               {/* Carbon Emissions Trend */}
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.4s'}}>
-                <h2 className="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.4s'}}>
+                <h2 className="text-xl font-bold text-cyan-400 mb-4 flex items-center gap-2">
                   <TrendingDown className="w-5 h-5" />
                   Carbon Emissions Trend
                 </h2>
@@ -228,12 +228,12 @@ const ReportPage = () => {
                 <div className="grid grid-cols-3 gap-3 mt-4">
                   <div className="text-center p-3 bg-slate-800/50 rounded-lg">
                     <p className="text-xs text-slate-400">2025 Emissions</p>
-                    <p className="text-xl font-bold text-emerald-400">450M</p>
-                    <p className="text-xs text-green-400">↓ 47%</p>
+                    <p className="text-xl font-bold text-cyan-400">450M</p>
+                    <p className="text-xs text-teal-400">↓ 47%</p>
                   </div>
                   <div className="text-center p-3 bg-slate-800/50 rounded-lg">
                     <p className="text-xs text-slate-400">vs Target</p>
-                    <p className="text-xl font-bold text-emerald-400">75%</p>
+                    <p className="text-xl font-bold text-cyan-400">75%</p>
                     <p className="text-xs text-slate-400">On Track</p>
                   </div>
                   <div className="text-center p-3 bg-slate-800/50 rounded-lg">
@@ -245,8 +245,8 @@ const ReportPage = () => {
               </div>
 
               {/* ESG Performance Radar */}
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.5s'}}>
-                <h2 className="text-xl font-bold text-emerald-400 mb-4">ESG Performance Breakdown</h2>
+              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.5s'}}>
+                <h2 className="text-xl font-bold text-cyan-400 mb-4">ESG Performance Breakdown</h2>
                 <ResponsiveContainer width="100%" height={280}>
                   <RadarChart data={esgScoresData}>
                     <PolarGrid stroke="#334155" />
@@ -264,8 +264,8 @@ const ReportPage = () => {
               </div>
 
               {/* Renewable Energy Progress */}
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.6s'}}>
-                <h2 className="text-xl font-bold text-emerald-400 mb-4">Renewable Energy Transition</h2>
+              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.6s'}}>
+                <h2 className="text-xl font-bold text-cyan-400 mb-4">Renewable Energy Transition</h2>
                 <ResponsiveContainer width="100%" height={280}>
                   <AreaChart data={renewableEnergyData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -280,15 +280,15 @@ const ReportPage = () => {
                     <Area type="monotone" dataKey="fossil" stackId="1" stroke="#f87171" fill="#f87171" fillOpacity={0.6} name="Fossil %" />
                   </AreaChart>
                 </ResponsiveContainer>
-                <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-                  <p className="text-sm text-emerald-300 font-semibold">Q1 2025: 75% Renewable Energy</p>
+                <div className="mt-4 p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                  <p className="text-sm text-cyan-300 font-semibold">Q1 2025: 75% Renewable Energy</p>
                   <p className="text-xs text-slate-400 mt-1">67% increase since Q1 2024</p>
                 </div>
               </div>
 
               {/* Energy Mix Pie Chart */}
-              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.7s'}}>
-                <h2 className="text-xl font-bold text-emerald-400 mb-4">Current Energy Mix</h2>
+              <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.7s'}}>
+                <h2 className="text-xl font-bold text-cyan-400 mb-4">Current Energy Mix</h2>
                 <ResponsiveContainer width="100%" height={280}>
                   <PieChart>
                     <Pie
@@ -322,8 +322,8 @@ const ReportPage = () => {
               </div>
 
               {/* Stock Performance with ESG Events */}
-              <div className="lg:col-span-2 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.8s'}}>
-                <h2 className="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+              <div className="lg:col-span-2 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.8s'}}>
+                <h2 className="text-xl font-bold text-cyan-400 mb-4 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5" />
                   Stock Performance & ESG Milestones
                 </h2>
@@ -352,7 +352,7 @@ const ReportPage = () => {
                 </ResponsiveContainer>
                 <div className="flex items-center gap-4 mt-4 text-sm">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-emerald-400"></div>
+                    <div className="w-3 h-3 rounded bg-cyan-400"></div>
                     <span className="text-slate-300">Regular Trading</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -364,8 +364,8 @@ const ReportPage = () => {
             </div>
 
             {/* Future Impact Analysis */}
-            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 mb-8 animate-slideIn" style={{animationDelay: '0.9s'}}>
-              <h2 className="text-2xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 mb-8 animate-slideIn" style={{animationDelay: '0.9s'}}>
+              <h2 className="text-2xl font-bold text-cyan-400 mb-4 flex items-center gap-2">
                 <Sparkles className="w-6 h-6" />
                 Future Impact Analysis
               </h2>
@@ -385,24 +385,24 @@ const ReportPage = () => {
           <>
             {/* PROJECT VIEW */}
             {/* Header Section */}
-            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-8 mb-8 border border-emerald-500/30 animate-slideIn">
+            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-8 mb-8 border border-cyan-500/30 animate-slideIn">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="flex items-center space-x-3 mb-2">
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-green-300 to-emerald-400 bg-clip-text text-transparent">{project.name}</h1>
-                    <span className="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">{project.name}</h1>
+                    <span className="bg-gradient-to-r from-cyan-600 to-teal-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
                       {project.id}
                     </span>
                   </div>
                   
                   <div className="flex items-center gap-6 mt-4">
                     <div className="flex items-center gap-2 text-slate-400">
-                      <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg border border-emerald-500/30 text-sm font-semibold">
+                      <span className="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-lg border border-cyan-500/30 text-sm font-semibold">
                         {project.category}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-slate-400">
-                      <MapPin className="w-5 h-5 text-emerald-400" />
+                      <MapPin className="w-5 h-5 text-cyan-400" />
                       <span className="text-lg">{project.country}</span>
                     </div>
                   </div>
@@ -413,20 +413,20 @@ const ReportPage = () => {
             {/* Main Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Details Card */}
-              <div className="lg:col-span-2 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.1s'}}>
-                <h2 className="text-2xl font-bold text-emerald-400 mb-6">Project Details</h2>
+              <div className="lg:col-span-2 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.1s'}}>
+                <h2 className="text-2xl font-bold text-cyan-400 mb-6">Project Details</h2>
                 
                 {project.image_url && (
                   <img 
                     src={project.image_url} 
                     alt={project.name}
-                    className="w-full h-64 object-cover rounded-xl mb-6 border border-emerald-500/20"
+                    className="w-full h-64 object-cover rounded-xl mb-6 border border-cyan-500/20"
                   />
                 )}
                 
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-emerald-300 mb-2">Description</h3>
+                    <h3 className="text-lg font-semibold text-cyan-300 mb-2">Description</h3>
                     <p className="text-slate-300 leading-relaxed">{project.description}</p>
                   </div>
                   
@@ -454,13 +454,13 @@ const ReportPage = () => {
               {/* Market Data & Actions */}
               <div className="space-y-6">
                 {/* Market Data */}
-                <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.2s'}}>
-                  <h2 className="text-xl font-bold text-emerald-400 mb-4">Market Data</h2>
+                <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.2s'}}>
+                  <h2 className="text-xl font-bold text-cyan-400 mb-4">Market Data</h2>
                   
                   <div className="space-y-4">
-                    <div className="p-4 bg-gradient-to-r from-emerald-500/20 to-green-500/20 border border-emerald-500/40 rounded-xl">
+                    <div className="p-4 bg-gradient-to-r from-cyan-500/20 to-teal-500/20 border border-cyan-500/40 rounded-xl">
                       <p className="text-sm text-slate-400 mb-1">Price per Credit</p>
-                      <p className="text-4xl font-bold text-emerald-400">${project.price}</p>
+                      <p className="text-4xl font-bold text-cyan-400">${project.price}</p>
                     </div>
                     
                     <div className="p-4 bg-slate-800/50 border border-slate-700/50 rounded-xl">
@@ -471,14 +471,14 @@ const ReportPage = () => {
                 </div>
 
                 {/* Action Area */}
-                <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-emerald-500/30 animate-slideIn" style={{animationDelay: '0.3s'}}>
+                <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30 animate-slideIn" style={{animationDelay: '0.3s'}}>
                   <a 
                     href={project.buy_link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full"
                   >
-                    <button className="w-full bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-emerald-500/50 transition-all hover:scale-105 flex items-center justify-center gap-3 animate-glow">
+                    <button className="w-full bg-gradient-to-r from-cyan-600 via-teal-600 to-cyan-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/50 transition-all hover:scale-105 flex items-center justify-center gap-3 animate-glow">
                       <ShoppingCart className="w-6 h-6" />
                       <span>Buy/Sell on CarbonMarket</span>
                     </button>
@@ -495,3 +495,4 @@ const ReportPage = () => {
 };
 
 export default ReportPage;
+

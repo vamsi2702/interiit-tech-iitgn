@@ -1,6 +1,6 @@
-# Our Kyzeel - Sustainability Analytics Platform
+# EcoInvest - Sustainable Investment Platform
 
-AI-powered ESG dashboard with RAG search, carbon credit marketplace, and real-time sustainability metrics.
+AI-powered ESG analytics dashboard with intelligent search, carbon credit marketplace, and real-time sustainability metrics.
 
 ## 🌿 Features
 
@@ -38,8 +38,7 @@ npm run build
 src/
 ├── components/
 │   ├── Navbar.jsx                   # Global nav with RAG search
-│   ├── DashboardChatSidebar.jsx     # Left sidebar AI chat
-│   └── AIBot.jsx                    # Chat widget
+│   └── DashboardChatSidebar.jsx     # Left sidebar AI chat
 ├── pages/
 │   ├── Dashboard.jsx                # 3-column main dashboard
 │   ├── ReportPage.jsx               # Company/Project reports

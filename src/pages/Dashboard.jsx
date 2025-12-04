@@ -61,22 +61,22 @@ const Dashboard = () => {
   });
 
   return (
-    <div className={`h-full overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} relative`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} relative`}>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8">
           {/* Left Column - Chat Sidebar */}
           <DashboardChatSidebar />
 
           {/* Middle Column - Main Content */}
-          <main className="col-span-1 flex flex-col h-full overflow-hidden">
-            {/* Header Section - Fixed */}
-            <div className="flex-shrink-0 mb-6">
+          <main className="col-span-1">
+            {/* Header Section */}
+            <div className="mb-6">
               <div className="flex items-center justify-between animate-slideIn mb-6">
                 <div>
                   <h1 className="text-4xl font-bold bg-gradient-to-r from-green-500 via-emerald-400 to-green-600 bg-clip-text text-transparent drop-shadow-2xl gradient-animate">Sustainability Watchlist</h1>
@@ -117,8 +117,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Companies Grid - Scrollable */}
-            <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
+            {/* Companies Grid */}
             <div className="grid grid-cols-1 gap-6">
               {filteredCompanies.map((company, idx) => (
                 <Link
@@ -180,13 +179,12 @@ const Dashboard = () => {
                 </Link>
               ))}
             </div>
-            </div>
           </main>
 
           {/* Right Column - Live News */}
-          <aside className="w-full lg:w-auto animate-slideIn h-full overflow-hidden" style={{animationDelay: '0.3s'}}>
-            <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl p-6 h-full border flex flex-col`}>
-              <div className="flex items-center justify-between mb-4 flex-shrink-0">
+          <aside className="w-full lg:w-auto animate-slideIn" style={{animationDelay: '0.3s'}}>
+            <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl p-6 border`}>
+              <div className="flex items-center justify-between mb-4">
                 <h2 className={`text-xl font-bold ${theme === 'dark' ? 'bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent' : 'text-green-700'}`}>Live News Feed</h2>
                 <span className="flex h-3 w-3 relative">
                   <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
@@ -194,7 +192,7 @@ const Dashboard = () => {
                 </span>
               </div>
 
-              <div className="space-y-4 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
+              <div className="space-y-4">
                 {news.map((article, idx) => (
                   <div
                     key={article.id}

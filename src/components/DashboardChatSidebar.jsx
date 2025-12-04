@@ -37,15 +37,15 @@ const DashboardChatSidebar = () => {
   };
 
   return (
-    <aside className="hidden lg:block w-80 h-full overflow-hidden">
-      <div className={`h-full ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl shadow-xl rounded-2xl border animate-slideIn flex flex-col`}>
+    <aside className="hidden lg:block w-80">
+      <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl shadow-xl rounded-2xl border animate-slideIn sticky top-24`}>
         <div className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
           <Bot className="w-5 h-5 relative z-10 drop-shadow-lg" />
           <h3 className="font-semibold relative z-10 drop-shadow-lg">EcoInvest AI</h3>
         </div>
 
-        <div className="p-4 flex-1 flex flex-col min-h-0 overflow-hidden">
+        <div className="p-4 max-h-[calc(100vh-7rem)] flex flex-col">
           {/* Message history */}
           <div className="flex-1 overflow-y-auto space-y-3 mb-3 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
             {messages.map((m, i) => (

@@ -13,10 +13,19 @@ const Dashboard = () => {
   const allCompanies = companiesData;
   const news = newsData;
 
-  // Initialize watchlist from localStorage
+  // Initialize watchlist from localStorage or use defaults
   const [watchlist, setWatchlist] = React.useState(() => {
     const saved = localStorage.getItem('watchlist');
-    return saved ? JSON.parse(saved) : [];
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // If saved list is empty array, return defaults instead
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+    // Default companies to show initially (or if list was empty)
+    const defaultIds = ['TSLA', 'MSFT', 'AAPL'];
+    return companiesData.filter(c => defaultIds.includes(c.id));
   });
 
   // Persist watchlist to localStorage whenever it changes
@@ -190,9 +199,9 @@ const Dashboard = () => {
           <DashboardChatSidebar />
 
           {/* Middle Column - Main Content */}
-          <main className="col-span-1">
+          <main className="col-span-1 flex flex-col h-full overflow-hidden">
             {/* Header Section */}
-            <div className="mb-6">
+            <div className="flex-shrink-0 mb-6">
               <div className="flex items-center justify-between animate-slideIn mb-6">
                 <div>
                   <h1 className="text-4xl font-bold bg-gradient-to-r from-green-500 via-emerald-400 to-green-600 bg-clip-text text-transparent drop-shadow-2xl gradient-animate">Sustainability Watchlist</h1>
@@ -252,84 +261,86 @@ const Dashboard = () => {
             </div>
 
             {/* Companies Grid - Scrollable */}
-            <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
-            {watchlist.length === 0 ? (
-                <div className={`flex flex-col items-center justify-center h-64 ${theme === 'dark' ? 'text-slate-500' : 'text-slate-400'}`}>
-                  <p className="text-lg">Your watchlist is empty.</p>
-                  <p className="text-sm mt-2">Search for companies above to add them.</p>
-                </div>
-              ) : (
-            <div className="grid grid-cols-1 gap-6">
-              {watchlist.map((company, idx) => (
-                <Link
-                  key={company.id}
-                  to={`/report/${company.id}`}
-                  className={`group relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-green-500/40 transition-all duration-500 p-6 border hover:border-green-500 animate-slideIn hover-lift`}
-                  style={{animationDelay: `${0.2 + idx * 0.1}s`}}
-                >
-                  {/* Animated gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-emerald-500/0 to-green-500/0 group-hover:from-green-500/10 group-hover:via-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
-                  
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+            <div className={`flex-1 overflow-hidden rounded-2xl border ${theme === 'dark' ? 'border-slate-800 bg-slate-900/50' : 'border-gray-200 bg-white/50'} backdrop-blur-sm relative`}>
+              <div className="absolute inset-0 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
+                {watchlist.length === 0 ? (
+                  <div className={`flex flex-col items-center justify-center h-full ${theme === 'dark' ? 'text-slate-500' : 'text-slate-400'}`}>
+                    <p className="text-lg">Your watchlist is empty.</p>
+                    <p className="text-sm mt-2">Search for companies above to add them.</p>
                   </div>
-                  <div className="flex justify-between items-start mb-4 relative z-10">
-                    <div className="flex-1">
-                      <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-green-300' : 'text-green-700'} group-hover:text-green-500 transition-all duration-300`}>
-                        {company.name}
-                      </h3>
-                      <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} transition-colors duration-300`}>{company.industry}</p>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-green-500/40 group-hover:shadow-green-500/60 transition-all duration-300 group-hover:scale-105">
-                        {company.id}
-                      </span>
-                      <button
-                        onClick={(e) => removeFromWatchlist(e, company.id)}
-                        className={`p-2 rounded-full ${theme === 'dark' ? 'hover:bg-red-500/20 text-slate-400 hover:text-red-400' : 'hover:bg-red-100 text-slate-400 hover:text-red-600'} transition-all duration-300 z-20`}
-                        title="Remove from watchlist"
+                ) : (
+                  <div className="grid grid-cols-1 gap-6">
+                    {watchlist.map((company, idx) => (
+                      <Link
+                        key={company.id}
+                        to={`/report/${company.id}`}
+                        className={`group relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-green-500/40 transition-all duration-500 p-6 border hover:border-green-500 animate-slideIn hover-lift`}
+                        style={{animationDelay: `${0.1 + idx * 0.1}s`}}
                       >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
+                        {/* Animated gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-emerald-500/0 to-green-500/0 group-hover:from-green-500/10 group-hover:via-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
+                        
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                        </div>
+                        <div className="flex justify-between items-start mb-4 relative z-10">
+                          <div className="flex-1">
+                            <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-green-300' : 'text-green-700'} group-hover:text-green-500 transition-all duration-300`}>
+                              {company.name}
+                            </h3>
+                            <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} transition-colors duration-300`}>{company.industry}</p>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-green-500/40 group-hover:shadow-green-500/60 transition-all duration-300 group-hover:scale-105">
+                              {company.id}
+                            </span>
+                            <button
+                              onClick={(e) => removeFromWatchlist(e, company.id)}
+                              className={`p-2 rounded-full ${theme === 'dark' ? 'hover:bg-red-500/20 text-slate-400 hover:text-red-400' : 'hover:bg-red-100 text-slate-400 hover:text-red-600'} transition-all duration-300 z-20`}
+                              title="Remove from watchlist"
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </div>
 
-                  <div className="grid grid-cols-2 gap-4 mb-4 relative z-10">
-                    <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border group-hover:border-green-500/40 transition-all duration-300`}>
-                      <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} mb-1 uppercase tracking-wider font-semibold`}>Stock Price</p>
-                      <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-slate-200' : 'text-slate-800'} group-hover:text-green-600 transition-colors duration-300`}>${company.stock_price}</p>
-                    </div>
-                    <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border group-hover:border-green-500/40 transition-all duration-300`}>
-                      <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} mb-1 uppercase tracking-wider font-semibold`}>GII Score</p>
-                      <div className="flex items-center space-x-2">
-                        <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} transition-all duration-300`}>{company.gii_score}</p>
-                        <span className={`text-xs ${theme === 'dark' ? 'bg-green-500/20 text-green-300 border-green-500/40' : 'bg-green-100 text-green-700 border-green-300'} px-2.5 py-1 rounded-md border font-semibold`}>
-                          {company.esg_rating}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                        <div className="grid grid-cols-2 gap-4 mb-4 relative z-10">
+                          <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border group-hover:border-green-500/40 transition-all duration-300`}>
+                            <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} mb-1 uppercase tracking-wider font-semibold`}>Stock Price</p>
+                            <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-slate-200' : 'text-slate-800'} group-hover:text-green-600 transition-colors duration-300`}>${company.stock_price}</p>
+                          </div>
+                          <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border group-hover:border-green-500/40 transition-all duration-300`}>
+                            <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} mb-1 uppercase tracking-wider font-semibold`}>GII Score</p>
+                            <div className="flex items-center space-x-2">
+                              <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} transition-all duration-300`}>{company.gii_score}</p>
+                              <span className={`text-xs ${theme === 'dark' ? 'bg-green-500/20 text-green-300 border-green-500/40' : 'bg-green-100 text-green-700 border-green-300'} px-2.5 py-1 rounded-md border font-semibold`}>
+                                {company.esg_rating}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
 
-                  <div className={`flex items-center justify-between pt-4 border-t ${theme === 'dark' ? 'border-slate-700/50' : 'border-gray-200'} group-hover:border-green-500/40 transition-colors duration-300 relative z-10`}>
-                    <div className="flex items-center space-x-2">
-                      <TrendingUp className={`w-5 h-5 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} group-hover:scale-110 transition-transform duration-300`} />
-                      <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} transition-colors duration-300 font-medium`}>Performance Trend</span>
-                    </div>
-                    <div className="transform group-hover:scale-110 transition-transform duration-300">
-                      <Sparkline trend={company.gii_score > 85 ? 'up' : 'down'} />
-                    </div>
-                  </div>
+                        <div className={`flex items-center justify-between pt-4 border-t ${theme === 'dark' ? 'border-slate-700/50' : 'border-gray-200'} group-hover:border-green-500/40 transition-colors duration-300 relative z-10`}>
+                          <div className="flex items-center space-x-2">
+                            <TrendingUp className={`w-5 h-5 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} group-hover:scale-110 transition-transform duration-300`} />
+                            <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} transition-colors duration-300 font-medium`}>Performance Trend</span>
+                          </div>
+                          <div className="transform group-hover:scale-110 transition-transform duration-300">
+                            <Sparkline trend={company.gii_score > 85 ? 'up' : 'down'} />
+                          </div>
+                        </div>
 
-                  <div className="mt-4 relative z-10">
-                    <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} line-clamp-2 transition-colors duration-300 leading-relaxed`}>
-                      {company.sustainability_update}
-                    </p>
+                        <div className="mt-4 relative z-10">
+                          <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} line-clamp-2 transition-colors duration-300 leading-relaxed`}>
+                            {company.sustainability_update}
+                          </p>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                </Link>
-              ))}
-            </div>
-            )}
+                )}
+              </div>
             </div>
           </main>
 

@@ -8,6 +8,7 @@ const DashboardChatSidebar = () => {
     { from: 'bot', text: "Hi — I'm EcoInvest AI. Ask about your watchlist, reports, or recent sustainability news." }
   ]);
   const [input, setInput] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const suggested = [
     "What are the current companies on my watchlist?",
@@ -16,24 +17,75 @@ const DashboardChatSidebar = () => {
     "News related to sustainability"
   ];
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e?.preventDefault();
-    if (!input.trim()) return;
-    setMessages(prev => [...prev, { from: 'user', text: input }]);
+    if (!input.trim() || isLoading) return;
+    
+    const userMessage = input.trim();
+    setMessages(prev => [...prev, { from: 'user', text: userMessage }]);
     setInput('');
-    // simulate response
-    setTimeout(() => {
-      setMessages(prev => [...prev, { from: 'bot', text: "Demo response: this would trigger the requested action." }]);
-    }, 700);
+    setIsLoading(true);
+
+    try {
+      // Call Flask backend API
+      const response = await fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userMessage })
+      });
+
+      const data = await response.json();
+      
+      if (data.status === 'success') {
+        setMessages(prev => [...prev, { from: 'bot', text: data.response }]);
+      } else {
+        setMessages(prev => [...prev, { from: 'bot', text: "Sorry, I encountered an error. Please try again." }]);
+      }
+    } catch (error) {
+      console.error('Error calling AI bot:', error);
+      setMessages(prev => [...prev, { 
+        from: 'bot', 
+        text: "Sorry, I'm having trouble connecting to the AI service. Please make sure the backend server is running (python backend/aibot.py)" 
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const onSuggest = (text) => {
+  const onSuggest = async (text) => {
+    if (isLoading) return;
     setInput(text);
     setMessages(prev => [...prev, { from: 'user', text }]);
-    // immediate simulated bot response
-    setTimeout(() => {
-      setMessages(prev => [...prev, { from: 'bot', text: "Demo response: handling suggested function." }]);
-    }, 700);
+    setInput('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: text })
+      });
+
+      const data = await response.json();
+      
+      if (data.status === 'success') {
+        setMessages(prev => [...prev, { from: 'bot', text: data.response }]);
+      } else {
+        setMessages(prev => [...prev, { from: 'bot', text: "Sorry, I encountered an error. Please try again." }]);
+      }
+    } catch (error) {
+      console.error('Error calling AI bot:', error);
+      setMessages(prev => [...prev, { 
+        from: 'bot', 
+        text: "Sorry, I'm having trouble connecting to the AI service. Please make sure the backend server is running." 
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -68,7 +120,8 @@ const DashboardChatSidebar = () => {
                 <button
                   key={idx}
                   onClick={() => onSuggest(s)}
-                  className={`text-left text-sm px-3 py-2 ${theme === 'dark' ? 'bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 border-green-500/30' : 'bg-gray-50 hover:bg-gray-100 text-slate-700 border-gray-200'} border rounded-lg hover:border-green-500 hover:shadow-md transition-all backdrop-blur-sm`}
+                  disabled={isLoading}
+                  className={`text-left text-sm px-3 py-2 ${theme === 'dark' ? 'bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 border-green-500/30' : 'bg-gray-50 hover:bg-gray-100 text-slate-700 border-gray-200'} border rounded-lg hover:border-green-500 hover:shadow-md transition-all backdrop-blur-sm ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {s}
                 </button>
@@ -83,10 +136,19 @@ const DashboardChatSidebar = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask EcoInvest AI..."
-                className={`flex-1 px-3 py-2 ${theme === 'dark' ? 'bg-slate-800/50 text-slate-200 placeholder-slate-500 border-green-500/30' : 'bg-white text-slate-800 placeholder-slate-500 border-gray-300'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 backdrop-blur-sm`}
+                disabled={isLoading}
+                className={`flex-1 px-3 py-2 ${theme === 'dark' ? 'bg-slate-800/50 text-slate-200 placeholder-slate-500 border-green-500/30' : 'bg-white text-slate-800 placeholder-slate-500 border-gray-300'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 backdrop-blur-sm ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               />
-              <button type="submit" className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-2 rounded-lg hover:shadow-lg hover:shadow-green-500/50 transition-all hover:scale-105">
-                <Send className="w-4 h-4" />
+              <button 
+                type="submit" 
+                disabled={isLoading}
+                className={`bg-gradient-to-r from-green-600 to-emerald-600 text-white p-2 rounded-lg hover:shadow-lg hover:shadow-green-500/50 transition-all hover:scale-105 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
               </button>
             </div>
           </form>

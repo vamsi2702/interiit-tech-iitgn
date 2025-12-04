@@ -69,9 +69,9 @@ const ProjectsPage = () => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      'Forestry': 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
-      'Renewable Energy': 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-      'Blue Carbon': 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+      'Forestry': 'bg-green-500/20 text-green-300 border-green-500/30',
+      'Renewable Energy': 'bg-blue-500/20 text-green-300 border-blue-500/30',
+      'Blue Carbon': 'bg-green-500/20 text-green-300 border-green-500/30',
       'Community Projects': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
       'Grassland Conservation': 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
     };
@@ -82,14 +82,14 @@ const ProjectsPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         {/* Header */}
         <div className="mb-8 animate-slideIn">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent mb-3">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-green-400 via-emerald-300 to-green-400 bg-clip-text text-transparent mb-3">
             Carbon Credit Projects
           </h1>
           <p className="text-slate-400 text-lg">
@@ -99,10 +99,10 @@ const ProjectsPage = () => {
 
         {/* Semantic Search Bar */}
         <div className="mb-8 animate-slideIn" style={{animationDelay: '0.1s'}}>
-          <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-cyan-500/30">
+          <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-green-500/30">
             <div className="flex items-center gap-3 mb-4">
-              <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
-              <h2 className="text-xl font-bold text-cyan-400">Find Your Perfect Carbon Project</h2>
+              <Sparkles className="w-5 h-5 text-green-400 animate-pulse" />
+              <h2 className="text-xl font-bold text-green-400">Find Your Perfect Carbon Project</h2>
             </div>
             
             <div className="relative">
@@ -117,22 +117,22 @@ const ProjectsPage = () => {
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                   placeholder="Search by project type, location, methodology, or keywords..."
-                  className="w-full px-6 py-3 pl-12 pr-12 text-slate-200 bg-slate-800/50 backdrop-blur-xl border border-cyan-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-400 placeholder-slate-500 shadow-lg transition-all"
+                  className="w-full px-6 py-3 pl-12 pr-12 text-slate-200 bg-slate-800/50 backdrop-blur-xl border border-green-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-400 placeholder-slate-500 shadow-lg transition-all"
                 />
-                <Search className="absolute left-4 top-3.5 w-5 h-5 text-cyan-400" />
+                <Search className="absolute left-4 top-3.5 w-5 h-5 text-green-400" />
                 {isSearching && (
-                  <Sparkles className="absolute right-4 top-3.5 w-5 h-5 text-cyan-400 animate-spin" />
+                  <Sparkles className="absolute right-4 top-3.5 w-5 h-5 text-green-400 animate-spin" />
                 )}
               </div>
 
               {/* Semantic Search Suggestions */}
               {showSuggestions && suggestions.length > 0 && (
-                <div className="absolute top-full mt-2 w-full bg-slate-800/95 backdrop-blur-xl border border-cyan-500/30 rounded-xl shadow-2xl overflow-hidden animate-slideIn z-50">
-                  <div className="p-2 border-b border-cyan-500/20 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-cyan-400" />
-                    <span className="text-xs text-cyan-400 font-semibold">Semantic Search Results</span>
+                <div className="absolute top-full mt-2 w-full bg-slate-800/95 backdrop-blur-xl border border-green-500/30 rounded-xl shadow-2xl overflow-hidden animate-slideIn z-50">
+                  <div className="p-2 border-b border-green-500/20 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-green-400" />
+                    <span className="text-xs text-green-400 font-semibold">Semantic Search Results</span>
                   </div>
-                  <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500/50 scrollbar-track-slate-800/50">
+                  <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50">
                     {suggestions.map((project) => (
                       <Link
                         key={project.id}
@@ -143,14 +143,14 @@ const ProjectsPage = () => {
                           <img 
                             src={project.image_url} 
                             alt={project.name}
-                            className="w-16 h-16 object-cover rounded-lg border border-cyan-500/20"
+                            className="w-16 h-16 object-cover rounded-lg border border-green-500/20"
                           />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-2">
-                              <h3 className="font-semibold text-slate-200 group-hover:text-cyan-400 transition line-clamp-1">
+                              <h3 className="font-semibold text-slate-200 group-hover:text-green-400 transition line-clamp-1">
                                 {project.name}
                               </h3>
-                              <span className="text-xs px-2 py-0.5 bg-cyan-500/20 text-cyan-300 rounded border border-cyan-500/30 whitespace-nowrap">
+                              <span className="text-xs px-2 py-0.5 bg-green-500/20 text-green-300 rounded border border-green-500/30 whitespace-nowrap">
                                 {project.id}
                               </span>
                             </div>
@@ -165,7 +165,7 @@ const ProjectsPage = () => {
                             </div>
                             <p className="text-xs text-slate-400 mt-1 line-clamp-1">{project.description}</p>
                             <div className="flex items-center gap-3 mt-2">
-                              <span className="text-sm font-bold text-cyan-400">${project.price}/credit</span>
+                              <span className="text-sm font-bold text-green-400">${project.price}/credit</span>
                               <span className="text-xs text-slate-500">{project.available_credits.toLocaleString()} available</span>
                             </div>
                           </div>
@@ -173,7 +173,7 @@ const ProjectsPage = () => {
                       </Link>
                     ))}
                   </div>
-                  <div className="p-3 bg-slate-900/50 border-t border-cyan-500/20 text-center">
+                  <div className="p-3 bg-slate-900/50 border-t border-green-500/20 text-center">
                     <p className="text-xs text-slate-500">Click on a project to view full details and purchase on Carbonmark</p>
                   </div>
                 </div>
@@ -192,8 +192,8 @@ const ProjectsPage = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 rounded-lg font-medium transition-all ${
                 selectedCategory === cat 
-                  ? 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white shadow-lg shadow-cyan-500/30' 
-                  : 'bg-slate-800/50 text-slate-400 border border-slate-700/50 hover:border-cyan-500/30 hover:text-cyan-400'
+                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/30' 
+                  : 'bg-slate-800/50 text-slate-400 border border-slate-700/50 hover:border-green-500/30 hover:text-green-400'
               }`}
             >
               {cat}
@@ -206,7 +206,7 @@ const ProjectsPage = () => {
           {filteredProjects.map((project, idx) => (
             <div
               key={project.id}
-              className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-cyan-500/20 transition-all overflow-hidden border border-cyan-500/20 hover:border-cyan-400/50 group animate-slideIn"
+              className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-green-500/20 transition-all overflow-hidden border border-green-500/20 hover:border-green-400/50 group animate-slideIn"
               style={{animationDelay: `${0.3 + idx * 0.05}s`}}
             >
               <div className="relative overflow-hidden">
@@ -215,7 +215,7 @@ const ProjectsPage = () => {
                   alt={project.name}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-sm px-2 py-1 rounded-lg border border-cyan-500/30">
+                <div className="absolute top-3 right-3 bg-slate-900/90 backdrop-blur-sm px-2 py-1 rounded-lg border border-green-500/30">
                   <span className="text-xs text-slate-300 font-mono">{project.id}</span>
                 </div>
               </div>
@@ -230,7 +230,7 @@ const ProjectsPage = () => {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-200 group-hover:text-cyan-400 transition mb-2 line-clamp-2">
+                <h3 className="text-lg font-bold text-slate-200 group-hover:text-green-400 transition mb-2 line-clamp-2">
                   {project.name}
                 </h3>
 
@@ -240,19 +240,19 @@ const ProjectsPage = () => {
 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center text-sm text-slate-300">
-                    <MapPin className="w-4 h-4 mr-2 text-cyan-400" />
+                    <MapPin className="w-4 h-4 mr-2 text-green-400" />
                     <span>{project.country}</span>
                   </div>
                   <div className="flex items-center text-sm text-slate-300">
-                    <Award className="w-4 h-4 mr-2 text-cyan-400" />
+                    <Award className="w-4 h-4 mr-2 text-green-400" />
                     <span className="font-semibold">{project.methodology}</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-800/50 border border-cyan-500/20 p-4 rounded-xl mb-4">
+                <div className="bg-slate-800/50 border border-green-500/20 p-4 rounded-xl mb-4">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm text-slate-400">Price per Credit</span>
-                    <span className="text-2xl font-bold text-cyan-400">${project.price}</span>
+                    <span className="text-2xl font-bold text-green-400">${project.price}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-slate-400">Available</span>
@@ -275,7 +275,7 @@ const ProjectsPage = () => {
                     href={project.buy_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-gradient-to-r from-cyan-600 to-teal-600 text-white py-2.5 rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all flex items-center justify-center space-x-2"
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2.5 rounded-lg font-semibold hover:shadow-lg hover:shadow-green-500/50 transition-all flex items-center justify-center space-x-2"
                   >
                     <DollarSign className="w-4 h-4" />
                     <span>Buy on Carbonmark</span>
@@ -292,4 +292,5 @@ const ProjectsPage = () => {
 };
 
 export default ProjectsPage;
+
 

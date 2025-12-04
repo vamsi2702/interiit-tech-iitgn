@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        'eco-blue': '#0891b2',
-        'eco-teal': '#14b8a6',
-        'eco-cyan': '#06b6d4',
-        'eco-dark': '#0e7490',
-        'eco-light': '#67e8f9',
+        'eco-green': '#22c55e',
+        'eco-emerald': '#10b981',
+        'eco-lime': '#84cc16',
+        'eco-dark': '#166534',
+        'eco-light': '#86efac',
       },
     },
   },

@@ -10,7 +10,7 @@
     "available_credits": 284500,
     "category": "Forestry",
     "image_url": "https://via.placeholder.com/600x400/228B22/FFFFFF?text=Rimba+Raya+Forest",
-    "buy_link": "https://app.carbonmark.com/projects/VCS-1234"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-674"
   },
   {
     "id": "GS-7821",
@@ -23,7 +23,7 @@
     "available_credits": 156000,
     "category": "Renewable Energy",
     "image_url": "https://via.placeholder.com/600x400/87CEEB/FFFFFF?text=Wind+Turbines",
-    "buy_link": "https://app.carbonmark.com/projects/GS-7821"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-981"
   },
   {
     "id": "VCS-2456",
@@ -36,7 +36,7 @@
     "available_credits": 42800,
     "category": "Blue Carbon",
     "image_url": "https://via.placeholder.com/600x400/20B2AA/FFFFFF?text=Mangrove+Forest",
-    "buy_link": "https://app.carbonmark.com/projects/VCS-2456"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-934"
   },
   {
     "id": "CDM-9034",
@@ -49,7 +49,7 @@
     "available_credits": 223000,
     "category": "Renewable Energy",
     "image_url": "https://via.placeholder.com/600x400/4682B4/FFFFFF?text=Offshore+Wind",
-    "buy_link": "https://app.carbonmark.com/projects/CDM-9034"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-1764"
   },
   {
     "id": "VCS-3187",
@@ -62,7 +62,7 @@
     "available_credits": 367000,
     "category": "Forestry",
     "image_url": "https://via.placeholder.com/600x400/006400/FFFFFF?text=Amazon+Conservation",
-    "buy_link": "https://app.carbonmark.com/projects/VCS-3187"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-1396"
   },
   {
     "id": "GS-5629",
@@ -75,7 +75,7 @@
     "available_credits": 89400,
     "category": "Community Projects",
     "image_url": "https://via.placeholder.com/600x400/CD853F/FFFFFF?text=Cookstoves",
-    "buy_link": "https://app.carbonmark.com/projects/GS-5629"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-1764"
   },
   {
     "id": "VCS-4092",
@@ -88,7 +88,7 @@
     "available_credits": 198000,
     "category": "Grassland Conservation",
     "image_url": "https://via.placeholder.com/600x400/DAA520/FFFFFF?text=Cerrado+Savanna",
-    "buy_link": "https://app.carbonmark.com/projects/VCS-4092"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-1052"
   },
   {
     "id": "GS-6843",
@@ -101,6 +101,6 @@
     "available_credits": 175000,
     "category": "Renewable Energy",
     "image_url": "https://via.placeholder.com/600x400/FF8C00/FFFFFF?text=Solar+Thermal",
-    "buy_link": "https://app.carbonmark.com/projects/GS-6843"
+    "buy_link": "https://www.carbonmark.com/projects/VCS-981"
   }
 ]

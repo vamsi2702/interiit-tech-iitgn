@@ -21,7 +21,7 @@ ui_functions = EcoInvestUIFunctions(data_dir="../src/data")
 
 # Initialize Gemini model with tool calling
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.5-flash",
     google_api_key=GOOGLE_API_KEY,
     temperature=0.7
 )

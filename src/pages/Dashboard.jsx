@@ -83,10 +83,24 @@ const Dashboard = () => {
                   <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mt-2 text-lg animate-fadeIn`} style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
                 </div>
 
-                <button className="group relative flex items-center space-x-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-green-500/40 hover:shadow-2xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Plus className="w-5 h-5 relative z-10 group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="font-semibold relative z-10">Add Company</span>
+                <button className="group relative flex items-center gap-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-700 text-white px-6 py-3.5 rounded-xl font-semibold shadow-lg shadow-green-500/50 hover:shadow-2xl hover:shadow-green-500/70 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] overflow-hidden border border-green-500/50">
+                  {/* Animated background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                  </div>
+                  
+                  {/* Icon with enhanced animation */}
+                  <div className="relative z-10 bg-white/20 p-1 rounded-lg group-hover:bg-white/30 transition-colors duration-300">
+                    <Plus className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
+                  </div>
+                  
+                  <span className="relative z-10 tracking-wide">Add Company</span>
+                  
+                  {/* Pulse effect on hover */}
+                  <div className="absolute inset-0 rounded-xl bg-green-400/20 opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
                 </button>
               </div>
 

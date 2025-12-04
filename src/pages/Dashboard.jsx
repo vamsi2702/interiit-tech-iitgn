@@ -4,8 +4,10 @@ import { TrendingUp, Plus, ExternalLink } from 'lucide-react';
 import companiesData from '../data/companies.json';
 import newsData from '../data/news.json';
 import DashboardChatSidebar from '../components/DashboardChatSidebar';
+import { ThemeContext } from '../App';
 
 const Dashboard = () => {
+  const { theme } = React.useContext(ThemeContext);
   const companies = companiesData;
   const news = newsData;
 
@@ -59,7 +61,7 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-white via-gray-50 to-white'} relative overflow-hidden`}>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
@@ -67,17 +69,17 @@ const Dashboard = () => {
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-[calc(100vh-8rem)]">
           {/* Left Column - Chat Sidebar */}
           <DashboardChatSidebar />
 
           {/* Middle Column - Main Content */}
-          <main className="col-span-1">
-            <div className="sticky top-24 h-[calc(100vh-7rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50 pr-2">
+          <main className="col-span-1 flex flex-col h-full">
+            <div className="flex-shrink-0">
             <div className="mb-6 flex items-center justify-between animate-slideIn">
               <div>
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-green-400 via-emerald-300 to-green-500 bg-clip-text text-transparent drop-shadow-2xl gradient-animate">Sustainability Watchlist</h1>
-                <p className="text-slate-400 mt-2 text-lg animate-fadeIn" style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
+                <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mt-2 text-lg animate-fadeIn`} style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
               </div>
 
               <button className="group relative flex items-center space-x-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-green-500/40 hover:shadow-2xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden">
@@ -95,17 +97,19 @@ const Dashboard = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search companies or industries..."
-                className="relative w-full px-6 py-3 text-slate-200 bg-slate-800/60 backdrop-blur-xl border border-green-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 focus:bg-slate-800/80 placeholder-slate-400 shadow-xl transition-all duration-300 hover:border-green-400/60"
+                className={`relative w-full px-6 py-3 ${theme === 'dark' ? 'text-slate-200 bg-slate-800/60 placeholder-slate-400' : 'text-slate-800 bg-white/60 placeholder-slate-500'} backdrop-blur-xl border border-green-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 ${theme === 'dark' ? 'focus:bg-slate-800/80' : 'focus:bg-white/80'} shadow-xl transition-all duration-300 hover:border-green-400/60`}
               />
             </div>
+            </div>
 
-            {/* Companies Grid */}
-            <div className="grid grid-cols-1 gap-6">
+            {/* Companies Grid - Scrollable */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50 pr-2">
+            <div className="grid grid-cols-1 gap-6 pb-6">
               {filteredCompanies.map((company, idx) => (
                 <Link
                   key={company.id}
                   to={`/report/${company.id}`}
-                  className="group relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-green-500/30 transition-all duration-500 p-6 border border-green-500/30 hover:border-green-400/60 animate-slideIn hover-lift"
+                  className={`group relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90' : 'bg-gradient-to-br from-white/90 via-gray-50/90 to-white/90'} backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-green-500/30 transition-all duration-500 p-6 border border-green-500/30 hover:border-green-400/60 animate-slideIn hover-lift`}
                   style={{animationDelay: `${0.2 + idx * 0.1}s`}}
                 >
                   {/* Animated gradient overlay */}
@@ -165,9 +169,9 @@ const Dashboard = () => {
           </main>
 
           {/* Right Column - Live News */}
-          <aside className="w-full lg:w-auto animate-slideIn" style={{animationDelay: '0.3s'}}>
-            <div className="bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 sticky top-24 border border-green-500/30">
-              <div className="flex items-center justify-between mb-4">
+          <aside className="w-full lg:w-auto animate-slideIn h-full" style={{animationDelay: '0.3s'}}>
+            <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95' : 'bg-gradient-to-br from-white/95 via-gray-50/95 to-white/95'} backdrop-blur-xl rounded-2xl shadow-2xl p-6 h-full border border-green-500/30 flex flex-col`}>
+              <div className="flex items-center justify-between mb-4 flex-shrink-0">
                 <h2 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Live News Feed</h2>
                 <span className="flex h-3 w-3 relative">
                   <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
@@ -175,11 +179,11 @@ const Dashboard = () => {
                 </span>
               </div>
 
-              <div className="space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50">
+              <div className="space-y-4 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50">
                 {news.map((article, idx) => (
                   <div
                     key={article.id}
-                    className="group relative p-4 bg-slate-800/60 backdrop-blur-sm border border-green-500/30 rounded-xl hover:border-green-400/60 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift"
+                    className={`group relative p-4 ${theme === 'dark' ? 'bg-slate-800/60' : 'bg-white/60'} backdrop-blur-sm border border-green-500/30 rounded-xl hover:border-green-400/60 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift`}
                     style={{animationDelay: `${0.4 + idx * 0.05}s`}}
                   >
                     {/* Hover shimmer effect */}

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Leaf, Search, Sparkles } from 'lucide-react';
+import { Leaf, Search, Sparkles, Sun, Moon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../App';
 
 const Navbar = () => {
+  const { theme, toggleTheme } = React.useContext(ThemeContext);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearching, setIsSearching] = React.useState(false);
@@ -67,7 +69,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl bg-opacity-90 shadow-2xl sticky top-0 z-50 border-b border-green-500/30 animate-fadeIn">
+    <nav className={`${theme === 'dark' ? 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-r from-white via-gray-50 to-white'} backdrop-blur-xl bg-opacity-90 shadow-2xl sticky top-0 z-50 border-b border-green-500/30 animate-fadeIn`}>
       <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-green-500/5 opacity-50"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex justify-between items-center h-16 gap-8">
@@ -95,7 +97,7 @@ const Navbar = () => {
                   onFocus={() => setShowSuggestions(true)}
                   onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                   placeholder="Search companies, reports, ESG data..."
-                  className="relative w-full px-6 py-3 pl-12 pr-12 text-slate-200 bg-slate-800/60 backdrop-blur-xl border border-green-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 focus:bg-slate-800/80 placeholder-slate-400 shadow-xl transition-all duration-300 hover:border-green-400/60"
+                  className={`relative w-full px-6 py-3 pl-12 pr-12 ${theme === 'dark' ? 'text-slate-200 bg-slate-800/60 placeholder-slate-400' : 'text-slate-800 bg-white/60 placeholder-slate-500'} backdrop-blur-xl border border-green-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 ${theme === 'dark' ? 'focus:bg-slate-800/80' : 'focus:bg-white/80'} shadow-xl transition-all duration-300 hover:border-green-400/60`}
                 />
                 <Search className="absolute left-4 top-3.5 w-5 h-5 text-green-400 group-hover:scale-110 transition-transform duration-300" />
                 {isSearching && (
@@ -142,7 +144,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-8">
             <Link
               to="/"
-              className="text-slate-300 hover:text-green-400 font-semibold transition-all duration-300 relative group px-2 py-1"
+              className={`${theme === 'dark' ? 'text-slate-300 hover:text-green-400' : 'text-slate-700 hover:text-green-600'} font-semibold transition-all duration-300 relative group px-2 py-1`}
             >
               <span className="relative z-10">Dashboard</span>
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
@@ -150,12 +152,25 @@ const Navbar = () => {
             </Link>
             <Link
               to="/projects"
-              className="text-slate-300 hover:text-green-400 font-semibold transition-all duration-300 relative group px-2 py-1"
+              className={`${theme === 'dark' ? 'text-slate-300 hover:text-green-400' : 'text-slate-700 hover:text-green-600'} font-semibold transition-all duration-300 relative group px-2 py-1`}
             >
               <span className="relative z-10">Projects</span>
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-green-400 via-emerald-400 to-green-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
               <span className="absolute inset-0 bg-green-500/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 blur-sm"></span>
             </Link>
+            
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="relative p-2 rounded-lg bg-slate-800/50 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 hover:scale-110 group"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5 text-green-400 group-hover:rotate-180 transition-transform duration-500" />
+              ) : (
+                <Moon className="w-5 h-5 text-green-600 group-hover:-rotate-12 transition-transform duration-500" />
+              )}
+            </button>
           </div>
         </div>
       </div>

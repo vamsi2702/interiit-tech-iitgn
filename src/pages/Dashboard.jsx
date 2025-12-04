@@ -76,24 +76,26 @@ const Dashboard = () => {
             <div className="sticky top-24 h-[calc(100vh-7rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-500/50 scrollbar-track-slate-800/50 pr-2">
             <div className="mb-6 flex items-center justify-between animate-slideIn">
               <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-green-300 to-emerald-400 bg-clip-text text-transparent drop-shadow-2xl">Sustainability Watchlist</h1>
-                <p className="text-slate-400 mt-2 text-lg">Top 10 Companies Leading in ESG & Innovation</p>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-400 via-green-300 to-emerald-500 bg-clip-text text-transparent drop-shadow-2xl gradient-animate">Sustainability Watchlist</h1>
+                <p className="text-slate-400 mt-2 text-lg animate-fadeIn" style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
               </div>
 
-              <button className="flex items-center space-x-2 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 text-white px-6 py-3 rounded-xl hover:shadow-2xl hover:shadow-emerald-500/50 transition-all hover:scale-105 animate-glow">
-                <Plus className="w-5 h-5" />
-                <span className="font-semibold">Add Company</span>
+              <button className="group relative flex items-center space-x-2 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/60 transition-all duration-300 hover:scale-105 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <Plus className="w-5 h-5 relative z-10 group-hover:rotate-90 transition-transform duration-300" />
+                <span className="font-semibold relative z-10">Add Company</span>
               </button>
             </div>
 
             {/* Dashboard Search Bar */}
-            <div className="mb-6 animate-slideIn" style={{animationDelay: '0.1s'}}>
+            <div className="mb-6 animate-slideIn relative group" style={{animationDelay: '0.1s'}}>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-500/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search companies or industries..."
-                className="w-full px-6 py-3 text-slate-200 bg-slate-800/50 backdrop-blur-xl border border-emerald-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-400 placeholder-slate-500 shadow-lg transition-all"
+                className="relative w-full px-6 py-3 text-slate-200 bg-slate-800/60 backdrop-blur-xl border border-emerald-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 focus:bg-slate-800/80 placeholder-slate-400 shadow-xl transition-all duration-300 hover:border-emerald-400/60"
               />
             </div>
 
@@ -103,48 +105,56 @@ const Dashboard = () => {
                 <Link
                   key={company.id}
                   to={`/report/${company.id}`}
-                  className="bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-emerald-500/20 transition-all p-6 border border-emerald-500/20 hover:border-emerald-400/50 group relative overflow-hidden animate-slideIn"
+                  className="group relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-emerald-500/30 transition-all duration-500 p-6 border border-emerald-500/30 hover:border-emerald-400/60 animate-slideIn hover-lift"
                   style={{animationDelay: `${0.2 + idx * 0.1}s`}}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/5 transition-all"></div>
+                  {/* Animated gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-green-500/0 to-emerald-500/0 group-hover:from-emerald-500/10 group-hover:via-green-500/5 group-hover:to-emerald-500/10 transition-all duration-500"></div>
+                  
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                  </div>
                   <div className="flex justify-between items-start mb-4 relative z-10">
-                    <div>
-                      <h3 className="text-xl font-bold text-emerald-300 group-hover:text-emerald-400 transition drop-shadow-lg">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-emerald-300 group-hover:text-emerald-400 transition-all duration-300 drop-shadow-lg group-hover:drop-shadow-[0_0_15px_rgba(52,211,153,0.6)]">
                         {company.name}
                       </h3>
-                      <p className="text-sm text-slate-400">{company.industry}</p>
+                      <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300">{company.industry}</p>
                     </div>
-                    <span className="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg shadow-emerald-500/30">
+                    <span className="bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-emerald-500/40 group-hover:shadow-emerald-500/60 transition-all duration-300 group-hover:scale-105 animate-pulse-slow">
                       {company.id}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mb-4 relative z-10">
-                    <div>
-                      <p className="text-sm text-slate-500">Stock Price</p>
-                      <p className="text-2xl font-bold text-slate-200">${company.stock_price}</p>
+                    <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/50 group-hover:border-emerald-500/30 transition-all duration-300">
+                      <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Stock Price</p>
+                      <p className="text-2xl font-bold text-slate-200 group-hover:text-emerald-300 transition-colors duration-300">${company.stock_price}</p>
                     </div>
-                    <div>
-                      <p className="text-sm text-slate-500">GII Score</p>
+                    <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/50 group-hover:border-emerald-500/30 transition-all duration-300">
+                      <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider">GII Score</p>
                       <div className="flex items-center space-x-2">
-                        <p className="text-2xl font-bold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]">{company.gii_score}</p>
-                        <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded border border-emerald-500/30">
+                        <p className="text-2xl font-bold text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(52,211,153,0.8)] transition-all duration-300">{company.gii_score}</p>
+                        <span className="text-xs bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-md border border-emerald-500/40 group-hover:bg-emerald-500/30 transition-colors duration-300 font-semibold">
                           {company.esg_rating}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 relative z-10">
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 group-hover:border-emerald-500/30 transition-colors duration-300 relative z-10">
                     <div className="flex items-center space-x-2">
-                      <TrendingUp className="w-4 h-4 text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.5)]" />
-                      <span className="text-sm text-slate-400">Performance Trend</span>
+                      <TrendingUp className="w-5 h-5 text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)] group-hover:scale-110 transition-transform duration-300" />
+                      <span className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300 font-medium">Performance Trend</span>
                     </div>
-                    <Sparkline trend={company.gii_score > 85 ? 'up' : 'down'} />
+                    <div className="transform group-hover:scale-110 transition-transform duration-300">
+                      <Sparkline trend={company.gii_score > 85 ? 'up' : 'down'} />
+                    </div>
                   </div>
 
                   <div className="mt-4 relative z-10">
-                    <p className="text-xs text-slate-500 line-clamp-2">
+                    <p className="text-xs text-slate-500 group-hover:text-slate-400 line-clamp-2 transition-colors duration-300 leading-relaxed">
                       {company.sustainability_update}
                     </p>
                   </div>
@@ -169,27 +179,30 @@ const Dashboard = () => {
                 {news.map((article, idx) => (
                   <div
                     key={article.id}
-                    className="p-4 bg-slate-800/50 backdrop-blur-sm border border-emerald-500/20 rounded-xl hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/10 transition-all cursor-pointer group animate-slideIn"
+                    className="group relative p-4 bg-slate-800/60 backdrop-blur-sm border border-emerald-500/30 rounded-xl hover:border-emerald-400/60 hover:shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift"
                     style={{animationDelay: `${0.4 + idx * 0.05}s`}}
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <span className={`text-xs px-2 py-1 rounded-lg border ${article.sentiment === 'Positive' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : article.sentiment === 'Negative' ? 'bg-red-500/20 text-red-300 border-red-500/30' : 'bg-slate-700/50 text-slate-300 border-slate-600/30'}`}>
+                    {/* Hover shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                    
+                    <div className="flex items-start justify-between mb-2 relative z-10">
+                      <span className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all duration-300 ${article.sentiment === 'Positive' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 group-hover:bg-emerald-500/30' : article.sentiment === 'Negative' ? 'bg-red-500/20 text-red-300 border-red-500/40 group-hover:bg-red-500/30' : 'bg-slate-700/50 text-slate-300 border-slate-600/40 group-hover:bg-slate-700/70'}`}>
                         {article.sentiment}
                       </span>
-                      <span className="text-xs text-slate-500">{formatDate(article.date)}</span>
+                      <span className="text-xs text-slate-500 group-hover:text-slate-400 transition-colors duration-300">{formatDate(article.date)}</span>
                     </div>
                     
-                    <h4 className="font-semibold text-slate-200 mb-2 group-hover:text-emerald-400 transition line-clamp-2">
+                    <h4 className="font-bold text-slate-200 mb-2 group-hover:text-emerald-300 transition-colors duration-300 line-clamp-2 relative z-10">
                       {article.title}
                     </h4>
                     
-                    <p className="text-sm text-slate-400 mb-2 line-clamp-2">
+                    <p className="text-sm text-slate-400 group-hover:text-slate-300 mb-3 line-clamp-2 transition-colors duration-300 relative z-10">
                       {article.summary}
                     </p>
                     
-                    <div className="flex items-center justify-between text-xs text-slate-500">
-                      <span>{article.source}</span>
-                      <ExternalLink className="w-3 h-3 text-emerald-400" />
+                    <div className="flex items-center justify-between text-xs relative z-10">
+                      <span className="text-slate-500 group-hover:text-emerald-400 transition-colors duration-300 font-medium">{article.source}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_5px_rgba(52,211,153,0.6)]" />
                     </div>
                   </div>
                 ))}

@@ -61,55 +61,56 @@ const Dashboard = () => {
   });
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-white via-gray-50 to-white'} relative overflow-hidden`}>
+    <div className={`h-screen overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} relative`}>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 h-full">
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-[calc(100vh-8rem)]">
           {/* Left Column - Chat Sidebar */}
           <DashboardChatSidebar />
 
           {/* Middle Column - Main Content */}
-          <main className="col-span-1 flex flex-col h-full">
-            <div className="flex-shrink-0">
-            <div className="mb-6 flex items-center justify-between animate-slideIn">
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-green-400 via-emerald-300 to-green-500 bg-clip-text text-transparent drop-shadow-2xl gradient-animate">Sustainability Watchlist</h1>
-                <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mt-2 text-lg animate-fadeIn`} style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
+          <main className="col-span-1 flex flex-col h-full overflow-hidden">
+            {/* Header Section - Fixed */}
+            <div className="flex-shrink-0 mb-6">
+              <div className="flex items-center justify-between animate-slideIn mb-6">
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-green-500 via-emerald-400 to-green-600 bg-clip-text text-transparent drop-shadow-2xl gradient-animate">Sustainability Watchlist</h1>
+                  <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mt-2 text-lg animate-fadeIn`} style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
+                </div>
+
+                <button className="group relative flex items-center space-x-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-green-500/40 hover:shadow-2xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <Plus className="w-5 h-5 relative z-10 group-hover:rotate-90 transition-transform duration-300" />
+                  <span className="font-semibold relative z-10">Add Company</span>
+                </button>
               </div>
 
-              <button className="group relative flex items-center space-x-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-green-500/40 hover:shadow-2xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <Plus className="w-5 h-5 relative z-10 group-hover:rotate-90 transition-transform duration-300" />
-                <span className="font-semibold relative z-10">Add Company</span>
-              </button>
-            </div>
-
-            {/* Dashboard Search Bar */}
-            <div className="mb-6 animate-slideIn relative group" style={{animationDelay: '0.1s'}}>
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search companies or industries..."
-                className={`relative w-full px-6 py-3 ${theme === 'dark' ? 'text-slate-200 bg-slate-800/60 placeholder-slate-400' : 'text-slate-800 bg-white/60 placeholder-slate-500'} backdrop-blur-xl border border-green-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 ${theme === 'dark' ? 'focus:bg-slate-800/80' : 'focus:bg-white/80'} shadow-xl transition-all duration-300 hover:border-green-400/60`}
-              />
-            </div>
+              {/* Dashboard Search Bar */}
+              <div className="animate-slideIn relative group" style={{animationDelay: '0.1s'}}>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search companies or industries..."
+                  className={`relative w-full px-6 py-3 ${theme === 'dark' ? 'text-slate-200 bg-slate-800/70 placeholder-slate-400 border-green-500/40' : 'text-slate-800 bg-white border-gray-300 placeholder-slate-500'} backdrop-blur-xl border rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-lg transition-all duration-300 hover:border-green-500`}
+                />
+              </div>
             </div>
 
             {/* Companies Grid - Scrollable */}
-            <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50 pr-2">
-            <div className="grid grid-cols-1 gap-6 pb-6">
+            <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
+            <div className="grid grid-cols-1 gap-6">
               {filteredCompanies.map((company, idx) => (
                 <Link
                   key={company.id}
                   to={`/report/${company.id}`}
-                  className={`group relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90' : 'bg-gradient-to-br from-white/90 via-gray-50/90 to-white/90'} backdrop-blur-xl rounded-2xl shadow-2xl hover:shadow-green-500/30 transition-all duration-500 p-6 border border-green-500/30 hover:border-green-400/60 animate-slideIn hover-lift`}
+                  className={`group relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-green-500/40 transition-all duration-500 p-6 border hover:border-green-500 animate-slideIn hover-lift`}
                   style={{animationDelay: `${0.2 + idx * 0.1}s`}}
                 >
                   {/* Animated gradient overlay */}
@@ -121,36 +122,36 @@ const Dashboard = () => {
                   </div>
                   <div className="flex justify-between items-start mb-4 relative z-10">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-green-300 group-hover:text-green-400 transition-all duration-300 drop-shadow-lg group-hover:drop-shadow-[0_0_15px_rgba(52,211,153,0.6)]">
+                      <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-green-300' : 'text-green-700'} group-hover:text-green-500 transition-all duration-300`}>
                         {company.name}
                       </h3>
-                      <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300">{company.industry}</p>
+                      <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} transition-colors duration-300`}>{company.industry}</p>
                     </div>
-                    <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-green-500/40 group-hover:shadow-green-500/60 transition-all duration-300 group-hover:scale-105 animate-pulse-slow">
+                    <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg shadow-green-500/40 group-hover:shadow-green-500/60 transition-all duration-300 group-hover:scale-105">
                       {company.id}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mb-4 relative z-10">
-                    <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/50 group-hover:border-green-500/30 transition-all duration-300">
-                      <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Stock Price</p>
-                      <p className="text-2xl font-bold text-slate-200 group-hover:text-green-300 transition-colors duration-300">${company.stock_price}</p>
+                    <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border group-hover:border-green-500/40 transition-all duration-300`}>
+                      <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} mb-1 uppercase tracking-wider font-semibold`}>Stock Price</p>
+                      <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-slate-200' : 'text-slate-800'} group-hover:text-green-600 transition-colors duration-300`}>${company.stock_price}</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/50 group-hover:border-green-500/30 transition-all duration-300">
-                      <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider">GII Score</p>
+                    <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border group-hover:border-green-500/40 transition-all duration-300`}>
+                      <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} mb-1 uppercase tracking-wider font-semibold`}>GII Score</p>
                       <div className="flex items-center space-x-2">
-                        <p className="text-2xl font-bold text-green-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(52,211,153,0.8)] transition-all duration-300">{company.gii_score}</p>
-                        <span className="text-xs bg-green-500/20 text-green-300 px-2.5 py-1 rounded-md border border-green-500/40 group-hover:bg-green-500/30 transition-colors duration-300 font-semibold">
+                        <p className={`text-2xl font-bold ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} transition-all duration-300`}>{company.gii_score}</p>
+                        <span className={`text-xs ${theme === 'dark' ? 'bg-green-500/20 text-green-300 border-green-500/40' : 'bg-green-100 text-green-700 border-green-300'} px-2.5 py-1 rounded-md border font-semibold`}>
                           {company.esg_rating}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 group-hover:border-green-500/30 transition-colors duration-300 relative z-10">
+                  <div className={`flex items-center justify-between pt-4 border-t ${theme === 'dark' ? 'border-slate-700/50' : 'border-gray-200'} group-hover:border-green-500/40 transition-colors duration-300 relative z-10`}>
                     <div className="flex items-center space-x-2">
-                      <TrendingUp className="w-5 h-5 text-green-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)] group-hover:scale-110 transition-transform duration-300" />
-                      <span className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300 font-medium">Performance Trend</span>
+                      <TrendingUp className={`w-5 h-5 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} group-hover:scale-110 transition-transform duration-300`} />
+                      <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} transition-colors duration-300 font-medium`}>Performance Trend</span>
                     </div>
                     <div className="transform group-hover:scale-110 transition-transform duration-300">
                       <Sparkline trend={company.gii_score > 85 ? 'up' : 'down'} />
@@ -158,7 +159,7 @@ const Dashboard = () => {
                   </div>
 
                   <div className="mt-4 relative z-10">
-                    <p className="text-xs text-slate-500 group-hover:text-slate-400 line-clamp-2 transition-colors duration-300 leading-relaxed">
+                    <p className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} line-clamp-2 transition-colors duration-300 leading-relaxed`}>
                       {company.sustainability_update}
                     </p>
                   </div>
@@ -169,44 +170,44 @@ const Dashboard = () => {
           </main>
 
           {/* Right Column - Live News */}
-          <aside className="w-full lg:w-auto animate-slideIn h-full" style={{animationDelay: '0.3s'}}>
-            <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95' : 'bg-gradient-to-br from-white/95 via-gray-50/95 to-white/95'} backdrop-blur-xl rounded-2xl shadow-2xl p-6 h-full border border-green-500/30 flex flex-col`}>
+          <aside className="w-full lg:w-auto animate-slideIn h-full overflow-hidden" style={{animationDelay: '0.3s'}}>
+            <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl p-6 h-full border flex flex-col`}>
               <div className="flex items-center justify-between mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Live News Feed</h2>
+                <h2 className={`text-xl font-bold ${theme === 'dark' ? 'bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent' : 'text-green-700'}`}>Live News Feed</h2>
                 <span className="flex h-3 w-3 relative">
                   <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-lg shadow-green-500/50"></span>
                 </span>
               </div>
 
-              <div className="space-y-4 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-slate-800/50">
+              <div className="space-y-4 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
                 {news.map((article, idx) => (
                   <div
                     key={article.id}
-                    className={`group relative p-4 ${theme === 'dark' ? 'bg-slate-800/60' : 'bg-white/60'} backdrop-blur-sm border border-green-500/30 rounded-xl hover:border-green-400/60 hover:shadow-xl hover:shadow-green-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift`}
+                    className={`group relative p-4 ${theme === 'dark' ? 'bg-slate-800/60 border-green-500/30' : 'bg-gray-50 border-gray-200'} backdrop-blur-sm border rounded-xl hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift`}
                     style={{animationDelay: `${0.4 + idx * 0.05}s`}}
                   >
                     {/* Hover shimmer effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                     
                     <div className="flex items-start justify-between mb-2 relative z-10">
-                      <span className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all duration-300 ${article.sentiment === 'Positive' ? 'bg-green-500/20 text-green-300 border-green-500/40 group-hover:bg-green-500/30' : article.sentiment === 'Negative' ? 'bg-red-500/20 text-red-300 border-red-500/40 group-hover:bg-red-500/30' : 'bg-slate-700/50 text-slate-300 border-slate-600/40 group-hover:bg-slate-700/70'}`}>
+                      <span className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all duration-300 ${article.sentiment === 'Positive' ? theme === 'dark' ? 'bg-green-500/20 text-green-300 border-green-500/40' : 'bg-green-100 text-green-700 border-green-300' : article.sentiment === 'Negative' ? theme === 'dark' ? 'bg-red-500/20 text-red-300 border-red-500/40' : 'bg-red-100 text-red-700 border-red-300' : theme === 'dark' ? 'bg-slate-700/50 text-slate-300 border-slate-600/40' : 'bg-gray-200 text-gray-700 border-gray-300'}`}>
                         {article.sentiment}
                       </span>
-                      <span className="text-xs text-slate-500 group-hover:text-slate-400 transition-colors duration-300">{formatDate(article.date)}</span>
+                      <span className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} transition-colors duration-300`}>{formatDate(article.date)}</span>
                     </div>
                     
-                    <h4 className="font-bold text-slate-200 mb-2 group-hover:text-green-300 transition-colors duration-300 line-clamp-2 relative z-10">
+                    <h4 className={`font-bold ${theme === 'dark' ? 'text-slate-200 group-hover:text-green-300' : 'text-slate-800 group-hover:text-green-700'} mb-2 transition-colors duration-300 line-clamp-2 relative z-10`}>
                       {article.title}
                     </h4>
                     
-                    <p className="text-sm text-slate-400 group-hover:text-slate-300 mb-3 line-clamp-2 transition-colors duration-300 relative z-10">
+                    <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mb-3 line-clamp-2 transition-colors duration-300 relative z-10`}>
                       {article.summary}
                     </p>
                     
                     <div className="flex items-center justify-between text-xs relative z-10">
-                      <span className="text-slate-500 group-hover:text-green-400 transition-colors duration-300 font-medium">{article.source}</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-green-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_5px_rgba(52,211,153,0.6)]" />
+                      <span className={`${theme === 'dark' ? 'text-slate-500 group-hover:text-green-400' : 'text-slate-600 group-hover:text-green-600'} transition-colors duration-300 font-medium`}>{article.source}</span>
+                      <ExternalLink className={`w-3.5 h-3.5 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} group-hover:scale-110 transition-transform duration-300`} />
                     </div>
                   </div>
                 ))}

@@ -69,17 +69,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`${theme === 'dark' ? 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-r from-white via-gray-50 to-white'} backdrop-blur-xl bg-opacity-90 shadow-2xl sticky top-0 z-50 border-b border-green-500/30 animate-fadeIn`}>
-      <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-green-500/5 opacity-50"></div>
+    <nav className={`${theme === 'dark' ? 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl bg-opacity-90 shadow-lg sticky top-0 z-50 border-b animate-fadeIn`}>
+      <div className={`absolute inset-0 bg-gradient-to-r from-green-500/5 via-emerald-500/5 to-green-500/5 ${theme === 'dark' ? 'opacity-50' : 'opacity-20'}`}></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex justify-between items-center h-16 gap-8">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 hover:scale-105 transition-all duration-300 group relative">
             <div className="relative">
-              <Leaf className="w-8 h-8 text-green-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.9)] group-hover:rotate-12 transition-all duration-500" />
-              <div className="absolute inset-0 bg-green-400 blur-2xl opacity-40 group-hover:opacity-70 transition-opacity animate-pulse-slow"></div>
+              <Leaf className={`w-8 h-8 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} group-hover:rotate-12 transition-all duration-500`} />
+              <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-green-400' : 'bg-green-600'} blur-2xl opacity-40 group-hover:opacity-70 transition-opacity`}></div>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-green-400 via-green-300 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg gradient-animate">EcoInvest</span>
+            <span className={`text-2xl font-bold ${theme === 'dark' ? 'bg-gradient-to-r from-green-400 via-green-300 to-emerald-400 bg-clip-text text-transparent' : 'text-green-700'} drop-shadow-lg gradient-animate`}>EcoInvest</span>
           </Link>
 
           {/* Unified RAG Search Bar */}
@@ -162,7 +162,7 @@ const Navbar = () => {
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="relative p-2 rounded-lg bg-slate-800/50 border border-green-500/30 hover:border-green-400/60 transition-all duration-300 hover:scale-110 group"
+              className={`relative p-2 rounded-lg ${theme === 'dark' ? 'bg-slate-800/50 border-green-500/30' : 'bg-gray-100 border-gray-300'} border hover:border-green-500 transition-all duration-300 hover:scale-110 group`}
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (

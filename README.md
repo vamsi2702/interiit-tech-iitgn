@@ -53,7 +53,7 @@ src/
 
 ## 🌐 Live Demo
 
-**Production**: https://dist-6j5374n9v-raj-s-projects-33a9f3d9.vercel.app  
+**Production**: [https://interiit-tech-iitgn.vercel.app/](https://interiit-tech-iitgn.vercel.app/)  
 **GitHub**: [https://github.com/jilsnshah/interiit-tech-iitgn](https://github.com/jilsnshah/interiit-tech-iitgn)
 ## 🔌 Backend Integration
 

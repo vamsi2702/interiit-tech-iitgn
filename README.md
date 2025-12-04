@@ -54,8 +54,8 @@ src/
 ## 🌐 Live Demo
 
 **Production**: https://dist-6j5374n9v-raj-s-projects-33a9f3d9.vercel.app  
-**GitHub**: https://github.com/rajmodi8905/interiit-tech-iitgn-raj
-
+**GitHub**: [https://github.com/rajmodi8905/interiit-tech-iitgn-raj
+](https://github.com/jilsnshah/interiit-tech-iitgn)
 ## 🔌 Backend Integration
 
 Replace mock data with API calls:

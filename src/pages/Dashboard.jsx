@@ -61,7 +61,7 @@ const Dashboard = () => {
   });
 
   return (
-    <div className={`h-screen overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} relative`}>
+    <div className={`h-full overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} relative`}>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
@@ -69,7 +69,7 @@ const Dashboard = () => {
         <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-[calc(100vh-8rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-full">
           {/* Left Column - Chat Sidebar */}
           <DashboardChatSidebar />
 

@@ -18,13 +18,15 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <Router>
-        <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-50' : 'bg-white'}`}>
+        <div className={`h-screen overflow-hidden ${theme === 'dark' ? 'bg-gray-50' : 'bg-white'} flex flex-col`}>
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/report/:id" element={<ReportPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-          </Routes>
+          <div className="flex-1 overflow-hidden">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/report/:id" element={<ReportPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+            </Routes>
+          </div>
         </div>
       </Router>
     </ThemeContext.Provider>

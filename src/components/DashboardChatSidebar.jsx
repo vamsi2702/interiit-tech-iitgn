@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bot, Send, Sparkles } from 'lucide-react';
 import { ThemeContext } from '../App';
+import ReactMarkdown from 'react-markdown';
 
 const DashboardChatSidebar = () => {
   const { theme } = React.useContext(ThemeContext);
@@ -103,7 +104,13 @@ const DashboardChatSidebar = () => {
             {messages.map((m, i) => (
               <div key={i} className={m.from === 'user' ? 'flex justify-end' : 'flex justify-start'}>
                 <div className={`${m.from === 'user' ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg shadow-green-500/50' : theme === 'dark' ? 'bg-slate-800/80 border border-slate-700/50 text-slate-200' : 'bg-gray-50 border border-gray-200 text-slate-800'} px-3 py-2 rounded-lg max-w-[85%] backdrop-blur-sm animate-slideIn`}>
-                  <p className="text-sm">{m.text}</p>
+                  {m.from === 'bot' ? (
+                    <div className={`text-sm prose prose-sm max-w-none ${theme === 'dark' ? 'prose-invert prose-headings:text-green-400 prose-strong:text-green-300 prose-a:text-green-400 prose-code:text-green-300' : 'prose-headings:text-green-700 prose-strong:text-green-700 prose-a:text-green-600 prose-code:text-green-600'} prose-strong:font-bold prose-ul:list-disc prose-ul:ml-4 prose-li:my-0.5 prose-p:my-2 prose-p:leading-relaxed`}>
+                      <ReactMarkdown>{m.text}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="text-sm">{m.text}</p>
+                  )}
                 </div>
               </div>
             ))}

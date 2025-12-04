@@ -118,7 +118,7 @@ const Dashboard = () => {
             </div>
 
             {/* Companies Grid */}
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-6 max-h-[calc(100vh-16rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
               {filteredCompanies.map((company, idx) => (
                 <Link
                   key={company.id}
@@ -192,7 +192,7 @@ const Dashboard = () => {
                 </span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 max-h-[calc(100vh-16rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
                 {news.map((article, idx) => (
                   <div
                     key={article.id}

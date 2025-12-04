@@ -13,25 +13,43 @@ const Dashboard = () => {
   const allCompanies = companiesData;
   const news = newsData;
 
-  // Initialize watchlist from localStorage or use defaults
-  const [watchlist, setWatchlist] = React.useState(() => {
-    const saved = localStorage.getItem('watchlist');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // If saved list is empty array, return defaults instead
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-    // Default companies to show initially (or if list was empty)
-    const defaultIds = ['TSLA', 'MSFT', 'AAPL'];
-    return companiesData.filter(c => defaultIds.includes(c.id));
-  });
+  // Watchlist state
+  const [watchlist, setWatchlist] = React.useState([]);
 
-  // Persist watchlist to localStorage whenever it changes
+  // Fetch watchlist from backend on mount
   React.useEffect(() => {
-    localStorage.setItem('watchlist', JSON.stringify(watchlist));
-  }, [watchlist]);
+    const fetchWatchlist = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/watchlist');
+        if (response.ok) {
+          const data = await response.json();
+          // If backend list is empty, use defaults AND save them to backend
+          if (Array.isArray(data) && data.length === 0) {
+             const defaultIds = ['TSLA', 'MSFT', 'AAPL'];
+             const defaults = companiesData.filter(c => defaultIds.includes(c.id));
+             setWatchlist(defaults);
+             
+             // Sync defaults to backend immediately
+             for (const company of defaults) {
+                await fetch('http://localhost:5000/api/watchlist', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(company)
+                });
+             }
+          } else {
+            setWatchlist(data);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch watchlist:", error);
+        // Fallback to defaults if backend is down
+        const defaultIds = ['TSLA', 'MSFT', 'AAPL'];
+        setWatchlist(companiesData.filter(c => defaultIds.includes(c.id)));
+      }
+    };
+    fetchWatchlist();
+  }, []);
 
   const [searchQuery, setSearchQuery] = React.useState('');
   const [suggestions, setSuggestions] = React.useState([]);
@@ -78,19 +96,42 @@ const Dashboard = () => {
     setShowSuggestions(false);
   };
 
-  const addToWatchlist = (company) => {
+  const addToWatchlist = async (company) => {
+    // Optimistic update
     if (!watchlist.some(c => c.id === company.id)) {
       setWatchlist([...watchlist, company]);
+      
+      // API Call
+      try {
+        await fetch('http://localhost:5000/api/watchlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(company)
+        });
+      } catch (error) {
+        console.error("Error adding to watchlist:", error);
+      }
     }
     setAddSearchQuery('');
     setAddSuggestions([]);
     setIsAddModalOpen(false);
   };
 
-  const removeFromWatchlist = (e, companyId) => {
+  const removeFromWatchlist = async (e, companyId) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    // Optimistic update
     setWatchlist(watchlist.filter(c => c.id !== companyId));
+
+    // API Call
+    try {
+      await fetch(`http://localhost:5000/api/watchlist/${companyId}`, {
+        method: 'DELETE'
+      });
+    } catch (error) {
+      console.error("Error removing from watchlist:", error);
+    }
   };
 
   // Simple sparkline component

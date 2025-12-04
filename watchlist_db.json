@@ -1,0 +1,50 @@
+[
+  {
+    "id": "TSLA",
+    "name": "Tesla, Inc.",
+    "industry": "Automotive & Energy",
+    "description": "Leading electric vehicle manufacturer and clean energy company producing EVs, battery energy storage systems, and solar products. Tesla's mission centers on accelerating the world's transition to sustainable energy through innovation in transportation and renewable energy infrastructure.",
+    "gii_score": 89,
+    "stock_price": 242.84,
+    "market_cap": "2.4T",
+    "sustainability_update": "Announced plans to power all Gigafactories with 100% renewable energy by 2026 and published first comprehensive supply chain carbon footprint report showing 30% reduction in battery production emissions.",
+    "esg_rating": "A",
+    "website": "https://www.tesla.com"
+  },
+  {
+    "id": "MSFT",
+    "name": "Microsoft Corporation",
+    "industry": "Technology",
+    "description": "Global technology leader providing cloud computing, software, devices, and services. Microsoft has committed to being carbon negative by 2030 and removing all historical emissions by 2050, backed by aggressive renewable energy procurement and carbon removal investments.",
+    "gii_score": 92,
+    "stock_price": 378.91,
+    "market_cap": "2.8T",
+    "sustainability_update": "Achieved 100% renewable energy in all data centers globally and invested $200M in carbon removal technologies, purchasing 1.3M tonnes of CDR credits through the Frontier climate fund.",
+    "esg_rating": "AAA",
+    "website": "https://www.microsoft.com"
+  },
+  {
+    "id": "AAPL",
+    "name": "Apple Inc.",
+    "industry": "Technology",
+    "description": "Designer and manufacturer of consumer electronics, software, and online services including iPhone, Mac, iPad, and wearables. Apple achieved carbon neutrality in corporate operations and aims for carbon neutral products across the entire lifecycle by 2030.",
+    "gii_score": 94,
+    "stock_price": 189.95,
+    "market_cap": "2.9T",
+    "sustainability_update": "Launched first carbon-neutral product line with Apple Watch Series 9, utilizing 100% recycled aluminum and cobalt while offsetting remaining emissions through high-quality forestry and renewable energy credits.",
+    "esg_rating": "AAA",
+    "website": "https://www.apple.com"
+  },
+  {
+    "id": "ORCL",
+    "name": "Oracle Corporation",
+    "industry": "Technology",
+    "description": "Enterprise software and cloud infrastructure provider offering database systems, ERP, and cloud services to organizations globally. Oracle operates one of the world's most energy-efficient cloud infrastructures and has committed to 100% renewable energy by 2025.",
+    "gii_score": 81,
+    "stock_price": 175.32,
+    "market_cap": "487B",
+    "sustainability_update": "Surpassed 90% renewable energy across global operations and deployed AI-powered cooling systems reducing data center energy use by 38%, saving 520 GWh annually.",
+    "esg_rating": "A",
+    "website": "https://www.oracle.com"
+  }
+]

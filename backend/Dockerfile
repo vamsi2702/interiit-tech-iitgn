@@ -1,0 +1,23 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY pathway_reader.py .
+COPY backend_analysis.py .
+COPY app.py .
+
+# Expose Flask port
+EXPOSE 5000
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_APP=app.py
+ENV PORT=5000
+
+# Run the application
+CMD ["python", "app.py"]

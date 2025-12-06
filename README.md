@@ -96,19 +96,3 @@ npx netlify deploy --prod --dir=dist
 MIT License - see LICENSE file
 
 ---
-
-**Status**: Production Ready ✅  
-**Last Updated**: December 2025  
-**Contributors**: [@rajmodi8905](https://github.com/rajmodi8905)
-
-## 🤝 Contributing
-
-This project is part of IIT Gandhinagar Tech development.
-
-## 📄 License
-
-MIT License
-
----
-
-**Built with 💚 for a sustainable future | Deployed on Vercel**

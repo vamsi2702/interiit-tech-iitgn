@@ -1,6 +1,22 @@
-flask
-flask-cors
-langchain
-langchain-google-genai
-langchain-core
-python-dotenv
+# Flask Web Framework
+flask==3.0.0
+flask-cors==4.0.0
+flask-socketio==5.3.5
+
+# WebSocket Support
+python-socketio==5.10.0
+eventlet==0.33.3
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Database
+psycopg2-binary==2.9.9
+
+# Data Processing & Analysis
+numpy==1.24.3
+pandas==2.0.3
+
+# Utilities
+requests==2.31.0
+python-dateutil==2.8.2

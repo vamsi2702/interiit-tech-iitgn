@@ -1,17 +1,82 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { TrendingUp, Plus, ExternalLink, Trash2, X } from 'lucide-react';
-import companiesData from '../data/companies.json';
-import newsData from '../data/news.json';
-import DashboardChatSidebar from '../components/DashboardChatSidebar';
-import { ThemeContext } from '../App';
-import Fuse from 'fuse.js';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { TrendingUp, Plus, ExternalLink, Trash2, X } from "lucide-react";
+import DashboardChatSidebar from "../components/DashboardChatSidebar";
+import { ThemeContext } from "../App";
+import Fuse from "fuse.js";
+import api from "../services/api";
 
 const Dashboard = () => {
   const { theme } = React.useContext(ThemeContext);
   const navigate = useNavigate();
-  const allCompanies = companiesData;
-  const news = newsData;
+
+  // State for data from backend
+  const [allCompanies, setAllCompanies] = React.useState([]);
+  const [news, setNews] = React.useState([]);
+  const [analytics, setAnalytics] = React.useState(null);
+  const [lastUpdate, setLastUpdate] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+
+  // Fetch data from backend on mount
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [companiesData, newsData, analyticsData] = await Promise.all([
+          api.getCompanies(),
+          api.getNews(),
+          api.getAnalytics(),
+        ]);
+        setAllCompanies(companiesData || []);
+        // Ensure newsData is always an array - API returns {count, data}
+        const newsArray = Array.isArray(newsData)
+          ? newsData
+          : newsData?.data || [];
+        setNews(newsArray);
+        console.log("✅ News loaded:", newsArray.length, "articles");
+        setAnalytics(analyticsData);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load data. Please check if backend is running.");
+        // Fallback to empty arrays
+        setAllCompanies([]);
+        setNews([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    // Set up WebSocket for real-time updates
+    try {
+      api.initWebSocket();
+
+      // Listen for analytics updates (broadcast every 10 seconds)
+      api.onDataUpdate("analytics", (data) => {
+        console.log("📊 Analytics updated via WebSocket:", data);
+        setAnalytics(data);
+        setLastUpdate(new Date().toLocaleTimeString());
+      });
+
+      api.onDataUpdate("finance", (data) => {
+        console.log("💰 Finance data updated via WebSocket");
+        setAllCompanies(data);
+      });
+
+      api.onDataUpdate("news", (data) => {
+        console.log("📰 News updated via WebSocket");
+        // API returns {count, data} structure
+        const newsArray = Array.isArray(data) ? data : data?.data || [];
+        setNews(newsArray);
+        console.log("✅ News updated:", newsArray.length, "articles");
+      });
+    } catch (err) {
+      console.warn("WebSocket not available:", err);
+    }
+  }, []);
 
   // Watchlist state
   const [watchlist, setWatchlist] = React.useState([]);
@@ -51,19 +116,19 @@ const Dashboard = () => {
     fetchWatchlist();
   }, []);
 
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [suggestions, setSuggestions] = React.useState([]);
   const [showSuggestions, setShowSuggestions] = React.useState(false);
 
   // Add Company Modal State
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
-  const [addSearchQuery, setAddSearchQuery] = React.useState('');
+  const [addSearchQuery, setAddSearchQuery] = React.useState("");
   const [addSuggestions, setAddSuggestions] = React.useState([]);
 
   // Initialize Fuse for fuzzy search
   const fuse = React.useMemo(() => {
     return new Fuse(allCompanies, {
-      keys: ['name', 'id', 'industry'],
+      keys: ["name", "id", "industry"],
       threshold: 0.4,
       distance: 100,
     });
@@ -71,27 +136,27 @@ const Dashboard = () => {
 
   // Main Search Effect (Navigation)
   React.useEffect(() => {
-    if (searchQuery.trim() === '') {
+    if (searchQuery.trim() === "") {
       setSuggestions([]);
       return;
     }
     const results = fuse.search(searchQuery);
-    setSuggestions(results.map(result => result.item));
+    setSuggestions(results.map((result) => result.item));
   }, [searchQuery, fuse]);
 
   // Add Modal Search Effect
   React.useEffect(() => {
-    if (addSearchQuery.trim() === '') {
+    if (addSearchQuery.trim() === "") {
       setAddSuggestions([]);
       return;
     }
     const results = fuse.search(addSearchQuery);
-    setAddSuggestions(results.map(result => result.item));
+    setAddSuggestions(results.map((result) => result.item));
   }, [addSearchQuery, fuse]);
 
   const handleNavigateToCompany = (companyId) => {
     navigate(`/report/${companyId}`);
-    setSearchQuery('');
+    setSearchQuery("");
     setSuggestions([]);
     setShowSuggestions(false);
   };
@@ -112,7 +177,7 @@ const Dashboard = () => {
         console.error("Error adding to watchlist:", error);
       }
     }
-    setAddSearchQuery('');
+    setAddSearchQuery("");
     setAddSuggestions([]);
     setIsAddModalOpen(false);
   };
@@ -136,20 +201,23 @@ const Dashboard = () => {
 
   // Simple sparkline component
   const Sparkline = ({ trend }) => {
-    const points = trend === 'up' 
-      ? [30, 25, 28, 22, 26, 20, 15, 18, 12, 10]
-      : [10, 12, 15, 18, 16, 20, 22, 25, 28, 30];
-    
+    const points =
+      trend === "up"
+        ? [30, 25, 28, 22, 26, 20, 15, 18, 12, 10]
+        : [10, 12, 15, 18, 16, 20, 22, 25, 28, 30];
+
     const max = Math.max(...points);
-    const normalized = points.map(p => (p / max) * 30);
-    const pathData = normalized.map((y, i) => `${i * 10},${30 - y}`).join(' L ');
-    
+    const normalized = points.map((p) => (p / max) * 30);
+    const pathData = normalized
+      .map((y, i) => `${i * 10},${30 - y}`)
+      .join(" L ");
+
     return (
       <svg className="w-20 h-8" viewBox="0 0 100 30">
         <polyline
           points={pathData}
           fill="none"
-          stroke={trend === 'up' ? '#22c55e' : '#ef4444'}
+          stroke={trend === "up" ? "#22c55e" : "#ef4444"}
           strokeWidth="2"
         />
       </svg>
@@ -158,86 +226,204 @@ const Dashboard = () => {
 
   const getSentimentColor = (sentiment) => {
     switch (sentiment) {
-      case 'Positive':
-        return 'bg-green-100 text-green-800';
-      case 'Negative':
-        return 'bg-red-100 text-red-800';
+      case "Positive":
+        return "bg-green-100 text-green-800";
+      case "Negative":
+        return "bg-red-100 text-red-800";
       default:
-        return 'bg-gray-100 text-gray-800';
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} relative`}>
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-      </div>
-      {/* Add Company Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
-          <div className={`w-full max-w-md p-6 rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-slate-900 border border-slate-700' : 'bg-white'} transform transition-all scale-100`}>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Add to Watchlist</h2>
-              <button 
-                onClick={() => setIsAddModalOpen(false)}
-                className={`p-2 rounded-full ${theme === 'dark' ? 'hover:bg-slate-800 text-slate-400' : 'hover:bg-gray-100 text-gray-500'}`}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            
-            <div className="relative mb-6">
-              <input
-                type="text"
-                value={addSearchQuery}
-                onChange={(e) => setAddSearchQuery(e.target.value)}
-                placeholder="Search company name or ticker..."
-                autoFocus
-                className={`w-full px-4 py-3 rounded-xl border ${theme === 'dark' ? 'bg-slate-800 border-slate-600 text-white placeholder-slate-400 focus:border-green-500' : 'bg-gray-50 border-gray-300 text-gray-900 focus:border-green-500'} focus:outline-none focus:ring-2 focus:ring-green-500/20 transition-all`}
-              />
-            </div>
-
-            <div className={`max-h-60 overflow-y-auto rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-gray-50'} custom-scrollbar`}>
-              {addSearchQuery && addSuggestions.length > 0 ? (
-                addSuggestions.map((company) => (
-                  <button
-                    key={company.id}
-                    onClick={() => addToWatchlist(company)}
-                    className={`w-full px-4 py-3 flex items-center justify-between group transition-colors ${theme === 'dark' ? 'hover:bg-slate-700 text-slate-200' : 'hover:bg-gray-200 text-gray-700'}`}
-                  >
-                    <div className="text-left">
-                      <div className="font-semibold">{company.name}</div>
-                      <div className={`text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>{company.id} • {company.industry}</div>
-                    </div>
-                    {watchlist.some(c => c.id === company.id) ? (
-                      <span className="text-xs text-green-500 font-medium px-2 py-1 bg-green-500/10 rounded">Added</span>
-                    ) : (
-                      <Plus className="w-5 h-5 text-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    )}
-                  </button>
-                ))
-              ) : addSearchQuery ? (
-                <div className={`p-4 text-center ${theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`}>No companies found</div>
-              ) : (
-                <div className={`p-4 text-center ${theme === 'dark' ? 'text-slate-500' : 'text-gray-400'}`}>Type to search...</div>
-              )}
-            </div>
+    <div
+      className={`min-h-screen ${
+        theme === "dark"
+          ? "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
+          : "bg-gradient-to-br from-gray-50 via-white to-gray-50"
+      } relative`}
+    >
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-500 mx-auto mb-4"></div>
+            <p
+              className={theme === "dark" ? "text-slate-400" : "text-gray-600"}
+            >
+              Loading dashboard data...
+            </p>
           </div>
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-[calc(100vh-8rem)]">
-          {/* Left Column - Chat Sidebar */}
-          <DashboardChatSidebar />
+      {/* Error State */}
+      {error && !loading && (
+        <div className="flex items-center justify-center min-h-screen p-4">
+          <div
+            className={`max-w-md p-6 rounded-lg ${
+              theme === "dark"
+                ? "bg-slate-800 text-white"
+                : "bg-white text-gray-900"
+            }`}
+          >
+            <h2 className="text-xl font-bold mb-2 text-red-500">
+              Error Loading Data
+            </h2>
+            <p
+              className={theme === "dark" ? "text-slate-300" : "text-gray-700"}
+            >
+              {error}
+            </p>
+            <p
+              className={`mt-4 text-sm ${
+                theme === "dark" ? "text-slate-400" : "text-gray-600"
+              }`}
+            >
+              Make sure the backend server is running on port 5000.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content - Only show when not loading and no error */}
+      {!loading && !error && (
+        <>
+          {/* Animated background elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float"></div>
+            <div
+              className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float"
+              style={{ animationDelay: "1s" }}
+            ></div>
+            <div
+              className="absolute top-1/2 left-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float"
+              style={{ animationDelay: "2s" }}
+            ></div>
+          </div>
+          {/* Add Company Modal */}
+          {isAddModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
+              <div
+                className={`w-full max-w-md p-6 rounded-2xl shadow-2xl ${
+                  theme === "dark"
+                    ? "bg-slate-900 border border-slate-700"
+                    : "bg-white"
+                } transform transition-all scale-100`}
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <h2
+                    className={`text-2xl font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    Add to Watchlist
+                  </h2>
+                  <button
+                    onClick={() => setIsAddModalOpen(false)}
+                    className={`p-2 rounded-full ${
+                      theme === "dark"
+                        ? "hover:bg-slate-800 text-slate-400"
+                        : "hover:bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+
+                <div className="relative mb-6">
+                  <input
+                    type="text"
+                    value={addSearchQuery}
+                    onChange={(e) => setAddSearchQuery(e.target.value)}
+                    placeholder="Search company name or ticker..."
+                    autoFocus
+                    className={`w-full px-4 py-3 rounded-xl border ${
+                      theme === "dark"
+                        ? "bg-slate-800 border-slate-600 text-white placeholder-slate-400 focus:border-green-500"
+                        : "bg-gray-50 border-gray-300 text-gray-900 focus:border-green-500"
+                    } focus:outline-none focus:ring-2 focus:ring-green-500/20 transition-all`}
+                  />
+                </div>
+
+                <div
+                  className={`max-h-60 overflow-y-auto rounded-xl ${
+                    theme === "dark" ? "bg-slate-800/50" : "bg-gray-50"
+                  } custom-scrollbar`}
+                >
+                  {addSearchQuery && addSuggestions.length > 0 ? (
+                    addSuggestions.map((company) => (
+                      <button
+                        key={company.id}
+                        onClick={() => addToWatchlist(company)}
+                        className={`w-full px-4 py-3 flex items-center justify-between group transition-colors ${
+                          theme === "dark"
+                            ? "hover:bg-slate-700 text-slate-200"
+                            : "hover:bg-gray-200 text-gray-700"
+                        }`}
+                      >
+                        <div className="text-left">
+                          <div className="font-semibold">{company.name}</div>
+                          <div
+                            className={`text-xs ${
+                              theme === "dark"
+                                ? "text-slate-400"
+                                : "text-gray-500"
+                            }`}
+                          >
+                            {company.id} • {company.industry}
+                          </div>
+                        </div>
+                        {watchlist.some((c) => c.id === company.id) ? (
+                          <span className="text-xs text-green-500 font-medium px-2 py-1 bg-green-500/10 rounded">
+                            Added
+                          </span>
+                        ) : (
+                          <Plus className="w-5 h-5 text-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
+                      </button>
+                    ))
+                  ) : addSearchQuery ? (
+                    <div
+                      className={`p-4 text-center ${
+                        theme === "dark" ? "text-slate-400" : "text-gray-500"
+                      }`}
+                    >
+                      No companies found
+                    </div>
+                  ) : (
+                    <div
+                      className={`p-4 text-center ${
+                        theme === "dark" ? "text-slate-500" : "text-gray-400"
+                      }`}
+                    >
+                      Type to search...
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_384px] gap-8 h-[calc(100vh-8rem)]">
+              {/* Left Column - Chat Sidebar */}
+              <DashboardChatSidebar />
 
           {/* Middle Column - Main Content */}
           <main className="col-span-1 flex flex-col h-full overflow-hidden">
@@ -249,57 +435,184 @@ const Dashboard = () => {
                   <p className={`${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mt-2 text-lg animate-fadeIn`} style={{animationDelay: '0.2s'}}>Top 10 Companies Leading in ESG & Innovation</p>
                 </div>
 
-                <button 
-                  onClick={() => setIsAddModalOpen(true)}
-                  className="group relative flex items-center space-x-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-green-500/40 hover:shadow-2xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <Plus className="w-5 h-5 relative z-10 group-hover:rotate-90 transition-transform duration-300" />
-                  <span className="font-semibold relative z-10">Add Company</span>
-                </button>
-              </div>
+                    <button
+                      onClick={() => setIsAddModalOpen(true)}
+                      className="group relative flex items-center space-x-2 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-green-500/40 hover:shadow-2xl hover:shadow-green-500/60 transition-all duration-300 hover:scale-105 overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <Plus className="w-5 h-5 relative z-10 group-hover:rotate-90 transition-transform duration-300" />
+                      <span className="font-semibold relative z-10">
+                        Add Company
+                      </span>
+                    </button>
+                  </div>
 
-              {/* Dashboard Search Bar (Navigation) */}
-              <div className="animate-slideIn relative group z-40" style={{animationDelay: '0.1s'}}>
-                <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowSuggestions(true);
-                  }}
-                  onFocus={() => setShowSuggestions(true)}
-                  placeholder="Search companies to view report..."
-                  className={`relative w-full px-6 py-3 ${theme === 'dark' ? 'text-slate-200 bg-slate-800/70 placeholder-slate-400 border-green-500/40' : 'text-slate-800 bg-white border-gray-300 placeholder-slate-500'} backdrop-blur-xl border rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-lg transition-all duration-300 hover:border-green-500`}
-                />
-                
-                {/* Search Suggestions Dropdown */}
-                {showSuggestions && searchQuery && (
-                  <div className={`absolute w-full mt-2 rounded-xl shadow-2xl border overflow-hidden max-h-60 overflow-y-auto ${theme === 'dark' ? 'bg-slate-900 border-slate-700' : 'bg-white border-gray-200'}`}>
-                    {suggestions.length > 0 ? (
-                      suggestions.map((company) => (
-                        <div
-                          key={company.id}
-                          onClick={() => handleNavigateToCompany(company.id)}
-                          className={`px-6 py-3 cursor-pointer transition-colors duration-200 flex justify-between items-center ${theme === 'dark' ? 'hover:bg-slate-800 text-slate-200' : 'hover:bg-gray-50 text-slate-800'}`}
+                  {/* Live Analytics Stats */}
+                  {analytics && (
+                    <div
+                      className="grid grid-cols-3 gap-4 mb-6 animate-slideIn"
+                      style={{ animationDelay: "0.15s" }}
+                    >
+                      <div
+                        className={`p-4 rounded-xl ${
+                          theme === "dark"
+                            ? "bg-slate-800/60 border-green-500/30"
+                            : "bg-white border-gray-200"
+                        } border`}
+                      >
+                        <p
+                          className={`text-xs ${
+                            theme === "dark"
+                              ? "text-slate-400"
+                              : "text-gray-600"
+                          } mb-1 uppercase tracking-wider`}
                         >
-                          <div>
-                            <span className="font-bold">{company.name}</span>
-                            <span className={`ml-2 text-xs ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>({company.id})</span>
+                          Total Projects
+                        </p>
+                        <p
+                          className={`text-2xl font-bold ${
+                            theme === "dark"
+                              ? "text-green-400"
+                              : "text-green-600"
+                          }`}
+                        >
+                          {analytics.projects?.total?.toLocaleString() || 0}
+                        </p>
+                      </div>
+                      <div
+                        className={`p-4 rounded-xl ${
+                          theme === "dark"
+                            ? "bg-slate-800/60 border-green-500/30"
+                            : "bg-white border-gray-200"
+                        } border`}
+                      >
+                        <p
+                          className={`text-xs ${
+                            theme === "dark"
+                              ? "text-slate-400"
+                              : "text-gray-600"
+                          } mb-1 uppercase tracking-wider`}
+                        >
+                          Carbon Credits
+                        </p>
+                        <p
+                          className={`text-2xl font-bold ${
+                            theme === "dark"
+                              ? "text-green-400"
+                              : "text-green-600"
+                          }`}
+                        >
+                          {(
+                            (analytics.projects?.total_supply || 0) / 1000000
+                          ).toFixed(1)}
+                          M
+                        </p>
+                      </div>
+                      <div
+                        className={`p-4 rounded-xl ${
+                          theme === "dark"
+                            ? "bg-slate-800/60 border-green-500/30"
+                            : "bg-white border-gray-200"
+                        } border`}
+                      >
+                        <p
+                          className={`text-xs ${
+                            theme === "dark"
+                              ? "text-slate-400"
+                              : "text-gray-600"
+                          } mb-1 uppercase tracking-wider`}
+                        >
+                          Avg Price
+                        </p>
+                        <p
+                          className={`text-2xl font-bold ${
+                            theme === "dark"
+                              ? "text-green-400"
+                              : "text-green-600"
+                          }`}
+                        >
+                          ${(analytics.projects?.avg_price || 0).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Dashboard Search Bar (Navigation) */}
+                  <div
+                    className="animate-slideIn relative group z-40"
+                    style={{ animationDelay: "0.1s" }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setShowSuggestions(true);
+                      }}
+                      onFocus={() => setShowSuggestions(true)}
+                      placeholder="Search companies to view report..."
+                      className={`relative w-full px-6 py-3 ${
+                        theme === "dark"
+                          ? "text-slate-200 bg-slate-800/70 placeholder-slate-400 border-green-500/40"
+                          : "text-slate-800 bg-white border-gray-300 placeholder-slate-500"
+                      } backdrop-blur-xl border rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-lg transition-all duration-300 hover:border-green-500`}
+                    />
+
+                    {/* Search Suggestions Dropdown */}
+                    {showSuggestions && searchQuery && (
+                      <div
+                        className={`absolute w-full mt-2 rounded-xl shadow-2xl border overflow-hidden max-h-60 overflow-y-auto ${
+                          theme === "dark"
+                            ? "bg-slate-900 border-slate-700"
+                            : "bg-white border-gray-200"
+                        }`}
+                      >
+                        {suggestions.length > 0 ? (
+                          suggestions.map((company) => (
+                            <div
+                              key={company.id}
+                              onClick={() =>
+                                handleNavigateToCompany(company.id)
+                              }
+                              className={`px-6 py-3 cursor-pointer transition-colors duration-200 flex justify-between items-center ${
+                                theme === "dark"
+                                  ? "hover:bg-slate-800 text-slate-200"
+                                  : "hover:bg-gray-50 text-slate-800"
+                              }`}
+                            >
+                              <div>
+                                <span className="font-bold">
+                                  {company.name}
+                                </span>
+                                <span
+                                  className={`ml-2 text-xs ${
+                                    theme === "dark"
+                                      ? "text-slate-400"
+                                      : "text-slate-500"
+                                  }`}
+                                >
+                                  ({company.id})
+                                </span>
+                              </div>
+                              <ExternalLink className="w-4 h-4 text-green-500" />
+                            </div>
+                          ))
+                        ) : (
+                          <div
+                            className={`px-6 py-3 ${
+                              theme === "dark"
+                                ? "text-slate-400"
+                                : "text-slate-500"
+                            }`}
+                          >
+                            No matches found
                           </div>
-                          <ExternalLink className="w-4 h-4 text-green-500" />
-                        </div>
-                      ))
-                    ) : (
-                      <div className={`px-6 py-3 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>
-                        No matches found
+                        )}
                       </div>
                     )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
 
             {/* Companies Grid - Scrollable */}
             <div className={`flex-1 overflow-hidden rounded-2xl border ${theme === 'dark' ? 'border-slate-800 bg-slate-900/50' : 'border-gray-200 bg-white/50'} backdrop-blur-sm relative`}>
@@ -385,57 +698,141 @@ const Dashboard = () => {
             </div>
           </main>
 
-          {/* Right Column - Live News */}
-          <aside className="w-full lg:w-auto animate-slideIn" style={{animationDelay: '0.3s'}}>
-            <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30' : 'bg-white border-gray-200'} backdrop-blur-xl rounded-2xl shadow-xl p-6 border`}>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className={`text-xl font-bold ${theme === 'dark' ? 'bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent' : 'text-green-700'}`}>Live News Feed</h2>
-                <span className="flex h-3 w-3 relative">
-                  <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-lg shadow-green-500/50"></span>
-                </span>
-              </div>
-
-              <div className="space-y-4 max-h-[calc(100vh-16rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
-                {news.map((article, idx) => (
-                  <div
-                    key={article.id}
-                    className={`group relative p-4 ${theme === 'dark' ? 'bg-slate-800/60 border-green-500/30' : 'bg-gray-50 border-gray-200'} backdrop-blur-sm border rounded-xl hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift`}
-                    style={{animationDelay: `${0.4 + idx * 0.05}s`}}
-                  >
-                    {/* Hover shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                    
-                    <div className="flex items-start justify-between mb-2 relative z-10">
-                      <span className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all duration-300 ${article.sentiment === 'Positive' ? theme === 'dark' ? 'bg-green-500/20 text-green-300 border-green-500/40' : 'bg-green-100 text-green-700 border-green-300' : article.sentiment === 'Negative' ? theme === 'dark' ? 'bg-red-500/20 text-red-300 border-red-500/40' : 'bg-red-100 text-red-700 border-red-300' : theme === 'dark' ? 'bg-slate-700/50 text-slate-300 border-slate-600/40' : 'bg-gray-200 text-gray-700 border-gray-300'}`}>
-                        {article.sentiment}
-                      </span>
-                      <span className={`text-xs ${theme === 'dark' ? 'text-slate-500' : 'text-slate-600'} transition-colors duration-300`}>{formatDate(article.date)}</span>
-                    </div>
-                    
-                    <h4 className={`font-bold ${theme === 'dark' ? 'text-slate-200 group-hover:text-green-300' : 'text-slate-800 group-hover:text-green-700'} mb-2 transition-colors duration-300 line-clamp-2 relative z-10`}>
-                      {article.title}
-                    </h4>
-                    
-                    <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} mb-3 line-clamp-2 transition-colors duration-300 relative z-10`}>
-                      {article.summary}
-                    </p>
-                    
-                    <div className="flex items-center justify-between text-xs relative z-10">
-                      <span className={`${theme === 'dark' ? 'text-slate-500 group-hover:text-green-400' : 'text-slate-600 group-hover:text-green-600'} transition-colors duration-300 font-medium`}>{article.source}</span>
-                      <ExternalLink className={`w-3.5 h-3.5 ${theme === 'dark' ? 'text-green-400' : 'text-green-600'} group-hover:scale-110 transition-transform duration-300`} />
-                    </div>
+              {/* Right Column - Live News */}
+              <aside
+                className="w-full lg:w-auto animate-slideIn"
+                style={{ animationDelay: "0.3s" }}
+              >
+                <div
+                  className={`${
+                    theme === "dark"
+                      ? "bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-green-500/30"
+                      : "bg-white border-gray-200"
+                  } backdrop-blur-xl rounded-2xl shadow-xl p-6 border`}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h2
+                      className={`text-xl font-bold ${
+                        theme === "dark"
+                          ? "bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent"
+                          : "text-green-700"
+                      }`}
+                    >
+                      Live News Feed
+                    </h2>
+                    <span className="flex h-3 w-3 relative">
+                      <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-lg shadow-green-500/50"></span>
+                    </span>
                   </div>
-                ))}
-              </div>
+
+                  <div className="space-y-4 max-h-[calc(100vh-16rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-500/50 scrollbar-track-transparent">
+                    {Array.isArray(news) &&
+                      news.map((article, idx) => (
+                        <div
+                          key={article.id}
+                          className={`group relative p-4 ${
+                            theme === "dark"
+                              ? "bg-slate-800/60 border-green-500/30"
+                              : "bg-gray-50 border-gray-200"
+                          } backdrop-blur-sm border rounded-xl hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 cursor-pointer animate-slideIn overflow-hidden hover-lift`}
+                          style={{ animationDelay: `${0.4 + idx * 0.05}s` }}
+                        >
+                          {/* Hover shimmer effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-400/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+
+                          <div className="flex items-start justify-between mb-2 relative z-10">
+                            <span
+                              className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all duration-300 ${
+                                article.sentiment === "Positive"
+                                  ? theme === "dark"
+                                    ? "bg-green-500/20 text-green-300 border-green-500/40"
+                                    : "bg-green-100 text-green-700 border-green-300"
+                                  : article.sentiment === "Negative"
+                                  ? theme === "dark"
+                                    ? "bg-red-500/20 text-red-300 border-red-500/40"
+                                    : "bg-red-100 text-red-700 border-red-300"
+                                  : theme === "dark"
+                                  ? "bg-slate-700/50 text-slate-300 border-slate-600/40"
+                                  : "bg-gray-200 text-gray-700 border-gray-300"
+                              }`}
+                            >
+                              {article.sentiment}
+                            </span>
+                            <span
+                              className={`text-xs ${
+                                theme === "dark"
+                                  ? "text-slate-500"
+                                  : "text-slate-600"
+                              } transition-colors duration-300`}
+                            >
+                              {formatDate(article.date)}
+                            </span>
+                          </div>
+
+                          <h4
+                            className={`font-bold ${
+                              theme === "dark"
+                                ? "text-slate-200 group-hover:text-green-300"
+                                : "text-slate-800 group-hover:text-green-700"
+                            } mb-2 transition-colors duration-300 line-clamp-2 relative z-10`}
+                          >
+                            {article.title}
+                          </h4>
+
+                          <p
+                            className={`text-sm ${
+                              theme === "dark"
+                                ? "text-slate-400"
+                                : "text-slate-600"
+                            } mb-3 line-clamp-2 transition-colors duration-300 relative z-10`}
+                          >
+                            {article.summary}
+                          </p>
+
+                          <div className="flex items-center justify-between text-xs relative z-10">
+                            <span
+                              className={`${
+                                theme === "dark"
+                                  ? "text-slate-500 group-hover:text-green-400"
+                                  : "text-slate-600 group-hover:text-green-600"
+                              } transition-colors duration-300 font-medium`}
+                            >
+                              {article.source}
+                            </span>
+                            <ExternalLink
+                              className={`w-3.5 h-3.5 ${
+                                theme === "dark"
+                                  ? "text-green-400"
+                                  : "text-green-600"
+                              } group-hover:scale-110 transition-transform duration-300`}
+                            />
+                          </div>
+                        </div>
+                      ))}
+
+                    {/* Empty state */}
+                    {(!news || news.length === 0) && (
+                      <div
+                        className={`text-center p-8 ${
+                          theme === "dark" ? "text-slate-400" : "text-gray-600"
+                        }`}
+                      >
+                        <p className="text-lg">No news available</p>
+                        <p className="text-sm mt-2">
+                          Check back later for updates
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </aside>
             </div>
-          </aside>
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
 export default Dashboard;
-
-
